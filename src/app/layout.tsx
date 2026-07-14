@@ -18,16 +18,16 @@ const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Pendik Profiller",
+  title: "Pendik Escort",
   description:
-    "Pendik bölgesindeki profilleri isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
-  keywords: ["Pendik", "profiller", "profil listesi", "iletişim"],
+    "Pendik bölgesindeki Escort isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
+  keywords: ["Pendik", "Escort", "Escort listesi", "iletişim"],
   openGraph: {
-    title: "Pendik Profiller",
+    title: "Pendik Escort",
     description:
-      "Pendik bölgesindeki profilleri isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
+      "Pendik bölgesindeki Escort isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
     url: siteUrl,
-    siteName: "Pendik Profiller",
+    siteName: "Pendik Escort",
     locale: "tr_TR",
     type: "website",
   },

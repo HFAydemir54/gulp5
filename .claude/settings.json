@@ -19,7 +19,9 @@
       "Bash(rm -f /tmp/cookies.txt /tmp/test.png)",
       "Bash(python3 -)",
       "Bash(lsof -iTCP -sTCP:LISTEN -P)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
