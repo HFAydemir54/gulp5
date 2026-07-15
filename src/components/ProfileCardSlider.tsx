@@ -7,7 +7,12 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
   if (images.length <= 1) {
     return (
       <div className="h-24 flex-1 overflow-hidden bg-zinc-50 dark:bg-zinc-800">
-        <img src={images[0]} alt={alt} className="h-full w-full object-cover" />
+        <img
+          src={images[0]}
+          alt={alt}
+          loading="lazy"
+          className="h-full w-full object-cover"
+        />
       </div>
     );
   }
@@ -26,6 +31,7 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
             key={i}
             src={src}
             alt={alt}
+            loading="lazy"
             className="h-24 w-24 shrink-0 object-cover"
           />
         ))}

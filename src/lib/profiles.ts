@@ -6,7 +6,6 @@ import { kv } from "@vercel/kv";
 export type Profile = {
   id: string;
   firstName: string;
-  lastName: string;
   phone: string;
   age: number;
   city: string;
@@ -70,7 +69,6 @@ export async function getProfileById(id: string): Promise<Profile | null> {
 
 export async function addProfile(input: {
   firstName: string;
-  lastName: string;
   phone: string;
   age: number;
   city: string;
@@ -102,7 +100,6 @@ export async function updateProfile(
   id: string,
   input: {
     firstName: string;
-    lastName: string;
     phone: string;
     age: number;
     city: string;

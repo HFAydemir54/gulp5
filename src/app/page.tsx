@@ -68,6 +68,7 @@ export default async function Home() {
                   <img
                     src={defaultImage.src}
                     alt=""
+                    loading="lazy"
                     className="h-full w-full object-cover"
                   />
                   <div className="absolute top-2 left-4 flex flex-col gap-[10px] italic text-white">
@@ -116,12 +117,11 @@ export default async function Home() {
                 {profile.images && profile.images.length > 0 ? (
                   <ProfileCardSlider
                     images={profile.images}
-                    alt={`${profile.firstName} ${profile.lastName}`}
+                    alt={profile.firstName}
                   />
                 ) : (
                   <div className="flex h-24 flex-1 items-center justify-center bg-zinc-50 text-sm font-semibold text-zinc-500 dark:bg-purple-800/40 dark:text-pink-200">
                     {profile.firstName[0]}
-                    {profile.lastName[0]}
                   </div>
                 )}
               </ProfileCardLink>

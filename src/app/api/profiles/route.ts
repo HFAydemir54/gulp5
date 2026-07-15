@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json();
   const firstName = String(body.firstName || "").trim();
-  const lastName = String(body.lastName || "").trim();
   const phone = String(body.phone || "").trim();
   const age = body.age !== undefined && body.age !== "" ? Number(body.age) : NaN;
   const city = String(body.city || "").trim();
@@ -33,16 +32,15 @@ export async function POST(request: NextRequest) {
     ? new Date(rawExpiresAt).toISOString()
     : undefined;
 
-  if (!firstName || !lastName || !phone || isNaN(age) || age <= 0) {
+  if (!firstName || !phone || isNaN(age) || age <= 0) {
     return NextResponse.json(
-      { error: "firstName, lastName, phone ve geçerli bir age (yaş) zorunludur" },
+      { error: "firstName, phone ve geçerli bir age (yaş) zorunludur" },
       { status: 400 }
     );
   }
 
   const profile = await addProfile({
     firstName,
-    lastName,
     phone,
     age,
     city,

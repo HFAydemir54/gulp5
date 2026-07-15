@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProfileById } from "@/lib/profiles";
 import AdSlot from "@/components/AdSlot";
 import ImageSlider from "@/components/ImageSlider";
 import GtmViewItem from "@/components/GtmViewItem";
 import ContactButtons from "@/components/ContactButtons";
+import BackToListLink from "@/components/BackToListLink";
 
 export const dynamic = "force-dynamic";
 
@@ -23,20 +23,19 @@ export async function generateMetadata({
     return { title: "Profil bulunamadı" };
   }
 
-  const fullName = `${profile.firstName} ${profile.lastName}`;
   const description =
     profile.about ||
-    `${fullName} kullanıcısının profil detayları ve iletişim bilgileri.`;
+    `${profile.firstName} kullanıcısının profil detayları ve iletişim bilgileri.`;
   const pageUrl = `${siteUrl}/users/${profile.id}`;
 
   return {
-    title: `${fullName} | Profil`,
+    title: `${profile.firstName} | Profil`,
     description,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `${fullName} | Profil`,
+      title: `${profile.firstName} | Profil`,
       description,
       url: pageUrl,
       type: "profile",
@@ -65,7 +64,7 @@ export default async function UserDetailPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: `${profile.firstName} ${profile.lastName}`,
+    name: profile.firstName,
     description:
       profile.about ||
       `${profile.firstName} kullanıcısının profil detayları ve iletişim bilgileri.`,
@@ -85,7 +84,7 @@ export default async function UserDetailPage({
       <GtmViewItem profile={profile} />
       <header className="border-b border-zinc-100 bg-white py-4 text-center dark:border-pink-900 dark:bg-fuchsia-950">
         <h1 className="text-xl font-bold tracking-tight text-zinc-700 dark:text-pink-50">
-          {profile.firstName} {profile.lastName}
+          {profile.firstName}
         </h1>
       </header>
 
@@ -97,12 +96,7 @@ export default async function UserDetailPage({
         />
 
         <main className="mx-auto min-w-0 w-full max-w-2xl flex-1">
-          <Link
-            href="/"
-            className="text-sm text-zinc-400 hover:text-zinc-600 dark:text-pink-300 dark:hover:text-pink-100"
-          >
-            ← Tüm profiller
-          </Link>
+          <BackToListLink className="text-sm text-zinc-400 hover:text-zinc-600 dark:text-pink-300 dark:hover:text-pink-100" />
 
           <div className="mt-4 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-sm dark:border-pink-900 dark:bg-purple-900/40">
             {profile.images && profile.images.length > 0 && (

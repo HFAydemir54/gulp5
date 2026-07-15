@@ -14,11 +14,10 @@ type GtmItem = {
 export function profileToGtmItem(profile: {
   id: string;
   firstName: string;
-  lastName: string;
 }): GtmItem {
   return {
     item_id: profile.id,
-    item_name: `${profile.firstName} ${profile.lastName}`,
+    item_name: profile.firstName,
   };
 }
 

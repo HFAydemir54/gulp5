@@ -34,7 +34,6 @@ export default function AdminPage() {
 
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
   const [city, setCity] = useState("");
@@ -97,7 +96,6 @@ export default function AdminPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firstName,
-          lastName,
           phone,
           age: age ? Number(age) : undefined,
           city,
@@ -110,7 +108,6 @@ export default function AdminPage() {
     );
     if (res.ok) {
       setFirstName("");
-      setLastName("");
       setPhone("");
       setAge("");
       setCity("");
@@ -159,7 +156,6 @@ export default function AdminPage() {
   function handleEdit(profile: Profile) {
     setEditingId(profile.id);
     setFirstName(profile.firstName);
-    setLastName(profile.lastName);
     setPhone(profile.phone);
     setAge(profile.age ? String(profile.age) : "");
     setCity(profile.city || "");
@@ -173,7 +169,6 @@ export default function AdminPage() {
   function handleCancelEdit() {
     setEditingId(null);
     setFirstName("");
-    setLastName("");
     setPhone("");
     setAge("");
     setCity("");
@@ -248,13 +243,6 @@ export default function AdminPage() {
           placeholder="İsim"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
-          required
-        />
-        <input
-          placeholder="Soyisim"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
           className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
           required
         />
@@ -368,7 +356,7 @@ export default function AdminPage() {
           >
             <div>
               <p className="font-medium text-zinc-700 dark:text-pink-50">
-                {profile.firstName} {profile.lastName} <span className="text-sm font-normal text-zinc-300 dark:text-pink-400">(Yaş: {profile.age})</span>
+                {profile.firstName} <span className="text-sm font-normal text-zinc-300 dark:text-pink-400">(Yaş: {profile.age})</span>
               </p>
               <p className="text-sm text-zinc-400 dark:text-pink-300">
                 {profile.phone}
