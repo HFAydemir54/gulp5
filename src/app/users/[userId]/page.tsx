@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { getProfileById } from "@/lib/profiles";
 import AdSlot from "@/components/AdSlot";
 import ImageSlider from "@/components/ImageSlider";
+import GtmViewItem from "@/components/GtmViewItem";
+import ContactButtons from "@/components/ContactButtons";
 
 export const dynamic = "force-dynamic";
 
@@ -41,18 +43,16 @@ export default async function UserDetailPage({
 
   const whatsappNumber = `90${profile.phone.replace(/[^\d]/g, "").replace(/^0/, "")}`;
   const whatsappMessage = encodeURIComponent(
-    `Merhaba ${profile.firstName}, size ulaşmak istiyorum.`
+    `Merhaba ${profile.firstName}, size ulaşmak istiyorum.`,
   );
 
   return (
-    <div className="flex flex-1 flex-col bg-white dark:bg-zinc-950">
-      <header className="border-b border-zinc-100 bg-white py-8 text-center dark:border-zinc-800 dark:bg-black">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-700 dark:text-zinc-50">
+    <div className="flex flex-1 flex-col bg-white dark:bg-purple-950">
+      <GtmViewItem profile={profile} />
+      <header className="border-b border-zinc-100 bg-white py-4 text-center dark:border-pink-900 dark:bg-fuchsia-950">
+        <h1 className="text-xl font-bold tracking-tight text-zinc-700 dark:text-pink-50">
           {profile.firstName} {profile.lastName}
         </h1>
-        <p className="mt-2 text-sm text-zinc-400 dark:text-zinc-400">
-          Kullanıcı Detayları
-        </p>
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-4 px-4 py-6">
@@ -65,18 +65,18 @@ export default async function UserDetailPage({
         <main className="mx-auto min-w-0 w-full max-w-2xl flex-1">
           <Link
             href="/"
-            className="text-sm text-zinc-400 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-200"
+            className="text-sm text-zinc-400 hover:text-zinc-600 dark:text-pink-300 dark:hover:text-pink-100"
           >
             ← Tüm profiller
           </Link>
 
-          <div className="mt-4 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-4 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-sm dark:border-pink-900 dark:bg-purple-900/40">
             {profile.images && profile.images.length > 0 && (
               <ImageSlider images={profile.images} />
             )}
             <div className="p-6">
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-50 text-lg font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-300">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-50 text-lg font-semibold text-zinc-500 dark:bg-purple-800/40 dark:text-pink-200">
                   {profile.images && profile.images.length > 0 ? (
                     <img
                       src={profile.images[0]}
@@ -91,45 +91,33 @@ export default async function UserDetailPage({
                   )}
                 </div>
                 <div>
-                  <p className="text-lg font-medium text-zinc-700 dark:text-zinc-50">
+                  <p className="text-lg font-medium text-zinc-700 dark:text-pink-50">
                     {profile.firstName} {profile.lastName}
                   </p>
-                  <p className="text-sm text-zinc-400 dark:text-zinc-400">
+                  <p className="text-sm text-zinc-400 dark:text-pink-300">
                     {profile.phone} • {profile.age} Yaşında
                   </p>
                 </div>
               </div>
 
-            <div className="mt-6 border-t border-zinc-100 pt-6 dark:border-zinc-800">
-              <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-50">
-                Hakkında
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-            </div>
+              <div className="mt-6 border-t border-zinc-100 pt-6 dark:border-pink-900">
+                <h2 className="text-sm font-semibold text-zinc-700 dark:text-pink-50">
+                  Hakkında
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-pink-300">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+              </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={`tel:${profile.phone}`}
-                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-              >
-                Telefon ile Ara
-              </a>
-              <a
-                href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-emerald-500"
-              >
-                WhatsApp&apos;tan Yaz
-              </a>
+              <ContactButtons
+                profile={profile}
+                whatsappUrl={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+              />
             </div>
           </div>
-        </div>
 
           <AdSlot
             slotId="3333333333"

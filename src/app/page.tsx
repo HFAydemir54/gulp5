@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { getProfiles, isProfileActive } from "@/lib/profiles";
 import AdSlot from "@/components/AdSlot";
+import ProfileCardSlider from "@/components/ProfileCardSlider";
+import ProfileCardLink from "@/components/ProfileCardLink";
+import GtmViewItemList from "@/components/GtmViewItemList";
 import defaultImage from "@/assets/images/default.webp";
 
 export const dynamic = "force-dynamic";
@@ -9,14 +11,12 @@ export default async function Home() {
   const profiles = (await getProfiles()).filter(isProfileActive);
 
   return (
-    <div className="flex flex-1 flex-col bg-white dark:bg-zinc-950">
-      <header className="border-b border-zinc-100 bg-white py-8 text-center dark:border-zinc-800 dark:bg-black">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-700 dark:text-zinc-50">
+    <div className="flex flex-1 flex-col bg-white dark:bg-purple-950">
+      <GtmViewItemList profiles={profiles} />
+      <header className="border-b border-zinc-100 bg-white py-4 text-center dark:border-pink-900 dark:bg-fuchsia-950">
+        <h1 className="text-xl font-bold tracking-tight text-zinc-700 dark:text-pink-50">
           Profiller
         </h1>
-        <p className="mt-2 text-sm text-zinc-400 dark:text-zinc-400">
-          Kayıtlı profilleri buradan inceleyebilirsiniz.
-        </p>
       </header>
 
       {/* WhatsApp Call to Action Banner */}
@@ -34,10 +34,10 @@ export default async function Home() {
               </svg>
             </div>
             <div className="min-w-0">
-              <p className="truncate font-semibold text-zinc-700 dark:text-zinc-50 sm:text-base text-sm">
+              <p className="truncate font-semibold text-zinc-700 dark:text-pink-50 sm:text-base text-sm">
                 Profil eklemek isteyenler yazsın
               </p>
-              <p className="text-xs text-zinc-400 dark:text-zinc-400 sm:text-sm">
+              <p className="text-xs text-zinc-400 dark:text-pink-300 sm:text-sm">
                 Siz de listeye katılmak için hemen bizimle WhatsApp üzerinden
                 iletişime geçin.
               </p>
@@ -59,10 +59,10 @@ export default async function Home() {
         <main className="min-w-0 flex-1">
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {profiles.map((profile) => (
-              <Link
+              <ProfileCardLink
                 key={profile.id}
-                href={`/users/${profile.id}`}
-                className="relative flex items-stretch gap-1 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                profile={profile}
+                className="relative flex items-stretch gap-1 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-sm transition hover:shadow-md dark:border-pink-900 dark:bg-purple-900/40"
               >
                 <div className="absolute left-0 top-0 z-10 h-full w-[35%] overflow-hidden">
                   <img
@@ -75,25 +75,17 @@ export default async function Home() {
                   </p>
                 </div>
                 {profile.images && profile.images.length > 0 ? (
-                  profile.images.slice(0, 3).map((src, i) => (
-                    <div
-                      key={i}
-                      className="h-24 flex-1 overflow-hidden bg-zinc-50 dark:bg-zinc-800"
-                    >
-                      <img
-                        src={src}
-                        alt={`${profile.firstName} ${profile.lastName}`}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ))
+                  <ProfileCardSlider
+                    images={profile.images}
+                    alt={`${profile.firstName} ${profile.lastName}`}
+                  />
                 ) : (
-                  <div className="flex h-24 flex-1 items-center justify-center bg-zinc-50 text-sm font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-300">
+                  <div className="flex h-24 flex-1 items-center justify-center bg-zinc-50 text-sm font-semibold text-zinc-500 dark:bg-purple-800/40 dark:text-pink-200">
                     {profile.firstName[0]}
                     {profile.lastName[0]}
                   </div>
                 )}
-              </Link>
+              </ProfileCardLink>
             ))}
           </div>
 

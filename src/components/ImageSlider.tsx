@@ -59,7 +59,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="group relative w-full overflow-hidden bg-zinc-50 dark:bg-zinc-800 aspect-video md:aspect-[21/9]">
+    <div className="group relative w-full overflow-hidden bg-zinc-50 dark:bg-purple-800/40 aspect-video md:aspect-[21/9]">
       {/* Slider Container */}
       <div
         ref={sliderRef}

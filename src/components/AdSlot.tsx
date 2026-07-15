@@ -29,7 +29,7 @@ export default function AdSlot({ slotId, className, label }: AdSlotProps) {
   if (!ADSENSE_CLIENT) {
     return (
       <div
-        className={`flex items-center justify-center rounded-lg border border-dashed border-zinc-200 bg-white text-xs text-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 ${className || ""}`}
+        className={`flex items-center justify-center rounded-lg border border-dashed border-zinc-200 bg-white text-xs text-zinc-300 dark:border-pink-800 dark:bg-purple-900/40 ${className || ""}`}
       >
         {label}
       </div>
