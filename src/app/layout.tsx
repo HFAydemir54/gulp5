@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     siteName: "Pendik Profil",
     locale: "tr_TR",
     type: "website",
+    images: [{ url: "/icon.jpg", width: 1023, height: 916 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pendik Profil",
+    description:
+      "Pendik bölgesindeki Profil isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
+    images: ["/icon.jpg"],
   },
   robots: {
     index: true,
