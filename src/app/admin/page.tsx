@@ -191,12 +191,12 @@ export default function AdminPage() {
 
   if (!authenticated) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-white dark:bg-purple-950">
+      <div className="flex flex-1 items-center justify-center bg-purple-950">
         <form
           onSubmit={handleLogin}
-          className="w-full max-w-sm rounded-xl border border-zinc-100 bg-white p-6 shadow-sm dark:border-pink-900 dark:bg-purple-900/40"
+          className="w-full max-w-sm rounded-xl border border-pink-900 bg-purple-900/40 p-6 shadow-sm"
         >
-          <h1 className="mb-4 text-xl font-semibold text-zinc-700 dark:text-pink-50">
+          <h1 className="mb-4 text-xl font-semibold text-pink-50">
             Admin Girişi
           </h1>
           <input
@@ -204,7 +204,7 @@ export default function AdminPage() {
             placeholder="Şifre"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mb-3 w-full rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+            className="mb-3 w-full rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
             required
           />
           {loginError && (
@@ -212,7 +212,7 @@ export default function AdminPage() {
           )}
           <button
             type="submit"
-            className="w-full rounded-lg bg-zinc-900 px-4 py-2 text-white hover:bg-zinc-700 dark:bg-pink-100 dark:text-purple-900"
+            className="w-full rounded-lg bg-pink-100 px-4 py-2 text-purple-900 hover:bg-pink-200"
           >
             Giriş Yap
           </button>
@@ -224,12 +224,12 @@ export default function AdminPage() {
   return (
     <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-zinc-700 dark:text-pink-50">
+        <h1 className="text-2xl font-semibold text-pink-50">
           Profil Yönetimi
         </h1>
         <button
           onClick={handleLogout}
-          className="text-sm text-zinc-400 underline hover:text-zinc-700 dark:hover:text-pink-100"
+          className="text-sm text-pink-300 underline hover:text-pink-100"
         >
           Çıkış yap
         </button>
@@ -237,13 +237,13 @@ export default function AdminPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="mb-8 grid grid-cols-1 gap-3 rounded-xl border border-zinc-100 bg-white p-5 dark:border-pink-900 dark:bg-purple-900/40 sm:grid-cols-4"
+        className="mb-8 grid grid-cols-1 gap-3 rounded-xl border border-pink-900 bg-purple-900/40 p-5 sm:grid-cols-4"
       >
         <input
           placeholder="İsim"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           required
         />
         <input
@@ -252,7 +252,7 @@ export default function AdminPage() {
           onChange={(e) => setPhone(formatPhone(e.target.value))}
           inputMode="numeric"
           maxLength={18}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           required
         />
         <input
@@ -262,30 +262,30 @@ export default function AdminPage() {
           onChange={(e) => setAge(e.target.value)}
           min={1}
           max={120}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           required
         />
         <input
           placeholder="Şehir"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           required
         />
         <input
           placeholder="Buluşma Yeri"
           value={meetingPlace}
           onChange={(e) => setMeetingPlace(e.target.value)}
-          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           required
         />
-        <label className="col-span-full flex flex-col gap-1 text-sm text-zinc-500 dark:text-pink-200 sm:col-span-2">
+        <label className="col-span-full flex flex-col gap-1 text-sm text-pink-200 sm:col-span-2">
           İlan bitiş tarihi (boş bırakılırsa 1 hafta sonra)
           <input
             type="date"
             value={expiresAt}
             onChange={(e) => setExpiresAt(e.target.value)}
-            className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+            className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2"
           />
         </label>
         <textarea
@@ -293,10 +293,10 @@ export default function AdminPage() {
           value={about}
           onChange={(e) => setAbout(e.target.value)}
           rows={3}
-          className="col-span-full rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40 text-sm"
+          className="col-span-full rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2 text-sm"
         />
         <div className="col-span-full flex flex-col gap-2">
-          <label className="flex items-center gap-2 text-sm text-zinc-500 dark:text-pink-200">
+          <label className="flex items-center gap-2 text-sm text-pink-200">
             <input
               type="file"
               accept="image/*"
@@ -312,13 +312,13 @@ export default function AdminPage() {
             value={images}
             onChange={(e) => setImages(e.target.value)}
             rows={2}
-            className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40 text-sm"
+            className="rounded-lg border border-pink-800 bg-purple-800/40 px-3 py-2 text-sm"
           />
         </div>
         <div className="col-span-full flex justify-end gap-2">
           <button
             type="submit"
-            className="rounded-lg bg-zinc-900 px-6 py-2 text-white hover:bg-zinc-700 dark:bg-pink-100 dark:text-purple-900"
+            className="rounded-lg bg-pink-100 px-6 py-2 text-purple-900 hover:bg-pink-200"
           >
             {editingId ? "Güncelle" : "Ekle"}
           </button>
@@ -326,7 +326,7 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="rounded-lg border border-zinc-200 px-6 py-2 text-zinc-600 hover:bg-zinc-50 dark:border-pink-800 dark:text-zinc-200 dark:hover:bg-purple-800/40"
+              className="rounded-lg border border-pink-800 px-6 py-2 text-pink-200 hover:bg-purple-800/40"
             >
               Vazgeç
             </button>
@@ -337,7 +337,7 @@ export default function AdminPage() {
         )}
       </form>
 
-      <label className="mb-3 flex items-center gap-2 text-sm text-zinc-500 dark:text-pink-200">
+      <label className="mb-3 flex items-center gap-2 text-sm text-pink-200">
         <input
           type="checkbox"
           checked={showExpiredOnly}
@@ -352,13 +352,13 @@ export default function AdminPage() {
           .map((profile) => (
           <div
             key={profile.id}
-            className="flex items-center justify-between rounded-lg border border-zinc-100 bg-white px-4 py-3 dark:border-pink-900 dark:bg-purple-900/40"
+            className="flex items-center justify-between rounded-lg border border-pink-900 bg-purple-900/40 px-4 py-3"
           >
             <div>
-              <p className="font-medium text-zinc-700 dark:text-pink-50">
-                {profile.firstName} <span className="text-sm font-normal text-zinc-300 dark:text-pink-400">(Yaş: {profile.age})</span>
+              <p className="font-medium text-pink-50">
+                {profile.firstName} <span className="text-sm font-normal text-pink-400">(Yaş: {profile.age})</span>
               </p>
-              <p className="text-sm text-zinc-400 dark:text-pink-300">
+              <p className="text-sm text-pink-300">
                 {profile.phone}
               </p>
               {profile.expiresAt && (
@@ -366,7 +366,7 @@ export default function AdminPage() {
                   className={
                     isExpired(profile)
                       ? "text-xs font-medium text-red-600"
-                      : "text-xs text-zinc-300 dark:text-pink-400"
+                      : "text-xs text-pink-400"
                   }
                 >
                   Bitiş: {new Date(profile.expiresAt).toLocaleDateString("tr-TR")}
@@ -377,7 +377,7 @@ export default function AdminPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => handleEdit(profile)}
-                className="text-sm text-zinc-500 hover:underline dark:text-pink-200"
+                className="text-sm text-pink-200 hover:underline"
               >
                 Düzenle
               </button>

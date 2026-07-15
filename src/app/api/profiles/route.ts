@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addProfile, getProfiles } from "@/lib/profiles";
 import { isAdminAuthenticated } from "@/lib/auth";
+import { normalizePhoneDigits, isValidPhoneDigits } from "@/lib/phone";
 
 export async function GET() {
   const profiles = await getProfiles();
@@ -35,6 +36,13 @@ export async function POST(request: NextRequest) {
   if (!firstName || !phone || isNaN(age) || age <= 0) {
     return NextResponse.json(
       { error: "firstName, phone ve geçerli bir age (yaş) zorunludur" },
+      { status: 400 }
+    );
+  }
+
+  if (!isValidPhoneDigits(normalizePhoneDigits(phone))) {
+    return NextResponse.json(
+      { error: "Geçerli bir telefon numarası giriniz" },
       { status: 400 }
     );
   }

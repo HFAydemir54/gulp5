@@ -6,7 +6,7 @@ type ProfileCardSliderProps = {
 export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProps) {
   if (images.length <= 1) {
     return (
-      <div className="h-24 flex-1 overflow-hidden bg-zinc-50 dark:bg-zinc-800">
+      <div className="h-24 flex-1 overflow-hidden bg-purple-800/40">
         <img
           src={images[0]}
           alt={alt}
@@ -21,7 +21,7 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
   const duration = images.length * 3;
 
   return (
-    <div className="h-24 flex-1 overflow-hidden bg-zinc-50 dark:bg-zinc-800">
+    <div className="h-24 flex-1 overflow-hidden bg-purple-800/40">
       <div
         className="flex h-full w-max animate-[card-marquee_linear_infinite]"
         style={{ animationDuration: `${duration}s` }}
