@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
   const lastName = String(body.lastName || "").trim();
   const phone = String(body.phone || "").trim();
   const age = body.age !== undefined && body.age !== "" ? Number(body.age) : NaN;
+  const city = String(body.city || "").trim();
+  const meetingPlace = String(body.meetingPlace || "").trim();
+  const about = String(body.about || "").trim();
 
   const rawImages = body.images;
   const images = Array.isArray(rawImages)
@@ -37,6 +40,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const profile = await addProfile({ firstName, lastName, phone, age, images, expiresAt });
+  const profile = await addProfile({
+    firstName,
+    lastName,
+    phone,
+    age,
+    city,
+    meetingPlace,
+    about,
+    images,
+    expiresAt,
+  });
   return NextResponse.json(profile, { status: 201 });
 }

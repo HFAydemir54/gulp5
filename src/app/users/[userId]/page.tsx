@@ -9,6 +9,8 @@ import ContactButtons from "@/components/ContactButtons";
 
 export const dynamic = "force-dynamic";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+
 export async function generateMetadata({
   params,
 }: {
@@ -22,10 +24,24 @@ export async function generateMetadata({
   }
 
   const fullName = `${profile.firstName} ${profile.lastName}`;
+  const description =
+    profile.about ||
+    `${fullName} kullanıcısının profil detayları ve iletişim bilgileri.`;
+  const pageUrl = `${siteUrl}/users/${profile.id}`;
 
   return {
     title: `${fullName} | Profil`,
-    description: `${fullName} kullanıcısının profil detayları ve iletişim bilgileri.`,
+    description,
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title: `${fullName} | Profil`,
+      description,
+      url: pageUrl,
+      type: "profile",
+      images: profile.images?.length ? [{ url: profile.images[0] }] : undefined,
+    },
   };
 }
 
@@ -46,8 +62,26 @@ export default async function UserDetailPage({
     `Merhaba ${profile.firstName}, size ulaşmak istiyorum.`,
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: `${profile.firstName} ${profile.lastName}`,
+    description:
+      profile.about ||
+      `${profile.firstName} kullanıcısının profil detayları ve iletişim bilgileri.`,
+    address: profile.city
+      ? { "@type": "PostalAddress", addressLocality: profile.city }
+      : undefined,
+    image: profile.images?.[0],
+    url: `${siteUrl}/users/${profile.id}`,
+  };
+
   return (
     <div className="flex flex-1 flex-col bg-white dark:bg-purple-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <GtmViewItem profile={profile} />
       <header className="border-b border-zinc-100 bg-white py-4 text-center dark:border-pink-900 dark:bg-fuchsia-950">
         <h1 className="text-xl font-bold tracking-tight text-zinc-700 dark:text-pink-50">
@@ -75,47 +109,47 @@ export default async function UserDetailPage({
               <ImageSlider images={profile.images} />
             )}
             <div className="p-6">
-              <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-50 text-lg font-semibold text-zinc-500 dark:bg-purple-800/40 dark:text-pink-200">
-                  {profile.images && profile.images.length > 0 ? (
-                    <img
-                      src={profile.images[0]}
-                      alt={`${profile.firstName} ${profile.lastName}`}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <>
-                      {profile.firstName[0]}
-                      {profile.lastName[0]}
-                    </>
-                  )}
-                </div>
-                <div>
-                  <p className="text-lg font-medium text-zinc-700 dark:text-pink-50">
-                    {profile.firstName} {profile.lastName}
-                  </p>
-                  <p className="text-sm text-zinc-400 dark:text-pink-300">
-                    {profile.phone} • {profile.age} Yaşında
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-lg border border-zinc-100 bg-zinc-50 p-3 dark:border-pink-900 dark:bg-purple-800/40">
+                  <p className="text-xs text-zinc-400 dark:text-pink-300">İsim</p>
+                  <p className="text-sm font-medium text-zinc-700 dark:text-pink-50">
+                    {profile.firstName}
                   </p>
                 </div>
-              </div>
-
-              <div className="mt-6 border-t border-zinc-100 pt-6 dark:border-pink-900">
-                <h2 className="text-sm font-semibold text-zinc-700 dark:text-pink-50">
-                  Hakkında
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-pink-300">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+                <div className="rounded-lg border border-zinc-100 bg-zinc-50 p-3 dark:border-pink-900 dark:bg-purple-800/40">
+                  <p className="text-xs text-zinc-400 dark:text-pink-300">Yaş</p>
+                  <p className="text-sm font-medium text-zinc-700 dark:text-pink-50">
+                    {profile.age}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-zinc-100 bg-zinc-50 p-3 dark:border-pink-900 dark:bg-purple-800/40">
+                  <p className="text-xs text-zinc-400 dark:text-pink-300">Şehir</p>
+                  <p className="text-sm font-medium text-zinc-700 dark:text-pink-50">
+                    {profile.city || "—"}
+                  </p>
+                </div>
+                <div className="rounded-lg border border-zinc-100 bg-zinc-50 p-3 dark:border-pink-900 dark:bg-purple-800/40">
+                  <p className="text-xs text-zinc-400 dark:text-pink-300">Buluşma Yeri</p>
+                  <p className="text-sm font-medium text-zinc-700 dark:text-pink-50">
+                    {profile.meetingPlace || "—"}
+                  </p>
+                </div>
               </div>
 
               <ContactButtons
                 profile={profile}
                 whatsappUrl={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
               />
+
+              <div className="mt-6 border-t border-zinc-100 pt-6 dark:border-pink-900">
+                <h2 className="text-sm font-semibold text-zinc-700 dark:text-pink-50">
+                  Hakkında
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-pink-300">
+                  {profile.about ||
+                    `${profile.firstName}, ${profile.city || "belirtilmemiş şehir"} bölgesinde ${profile.meetingPlace || "belirtilmemiş bir buluşma noktasında"} görüşmeler için listede yer alıyor.`}
+                </p>
+              </div>
             </div>
           </div>
 

@@ -70,9 +70,48 @@ export default async function Home() {
                     alt=""
                     className="h-full w-full object-cover"
                   />
-                  <p className="absolute bottom-2 left-2 rounded-md bg-black/50 px-2 py-1 text-sm font-medium text-white">
-                    {profile.firstName}
-                  </p>
+                  <div className="absolute top-2 left-4 flex flex-col gap-[10px] italic text-white">
+                    <p className="text-[15px] font-medium leading-tight">
+                      <span style={{ textShadow: "none" }}>👸</span>
+                      &nbsp;
+                      <span
+                        style={{
+                          textShadow:
+                            "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                        }}
+                      >
+                        {profile.firstName}
+                      </span>
+                    </p>
+                    {profile.city && (
+                      <p className="text-[13px] leading-tight">
+                        <span style={{ textShadow: "none" }}>📍</span>
+                        &nbsp;
+                        <span
+                          style={{
+                            textShadow:
+                              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                          }}
+                        >
+                          {profile.city}
+                        </span>
+                      </p>
+                    )}
+                    {profile.meetingPlace && (
+                      <p className="text-[13px] leading-tight">
+                        <span style={{ textShadow: "none" }}>🛏️</span>
+                        &nbsp;
+                        <span
+                          style={{
+                            textShadow:
+                              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                          }}
+                        >
+                          {profile.meetingPlace}
+                        </span>
+                      </p>
+                    )}
+                  </div>
                 </div>
                 {profile.images && profile.images.length > 0 ? (
                   <ProfileCardSlider

@@ -37,6 +37,9 @@ export default function AdminPage() {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
+  const [city, setCity] = useState("");
+  const [meetingPlace, setMeetingPlace] = useState("");
+  const [about, setAbout] = useState("");
   const [images, setImages] = useState("");
   const [expiresAt, setExpiresAt] = useState("");
   const [formError, setFormError] = useState("");
@@ -97,6 +100,9 @@ export default function AdminPage() {
           lastName,
           phone,
           age: age ? Number(age) : undefined,
+          city,
+          meetingPlace,
+          about,
           images: parsedImages,
           expiresAt: expiresAt ? new Date(expiresAt).toISOString() : undefined,
         }),
@@ -107,6 +113,9 @@ export default function AdminPage() {
       setLastName("");
       setPhone("");
       setAge("");
+      setCity("");
+      setMeetingPlace("");
+      setAbout("");
       setImages("");
       setExpiresAt("");
       setEditingId(null);
@@ -153,6 +162,9 @@ export default function AdminPage() {
     setLastName(profile.lastName);
     setPhone(profile.phone);
     setAge(profile.age ? String(profile.age) : "");
+    setCity(profile.city || "");
+    setMeetingPlace(profile.meetingPlace || "");
+    setAbout(profile.about || "");
     setImages(profile.images ? profile.images.join("\n") : "");
     setExpiresAt(profile.expiresAt ? profile.expiresAt.slice(0, 10) : "");
     setFormError("");
@@ -164,6 +176,9 @@ export default function AdminPage() {
     setLastName("");
     setPhone("");
     setAge("");
+    setCity("");
+    setMeetingPlace("");
+    setAbout("");
     setImages("");
     setExpiresAt("");
     setFormError("");
@@ -262,6 +277,20 @@ export default function AdminPage() {
           className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
           required
         />
+        <input
+          placeholder="Şehir"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          required
+        />
+        <input
+          placeholder="Buluşma Yeri"
+          value={meetingPlace}
+          onChange={(e) => setMeetingPlace(e.target.value)}
+          className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
+          required
+        />
         <label className="col-span-full flex flex-col gap-1 text-sm text-zinc-500 dark:text-pink-200 sm:col-span-2">
           İlan bitiş tarihi (boş bırakılırsa 1 hafta sonra)
           <input
@@ -271,6 +300,13 @@ export default function AdminPage() {
             className="rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40"
           />
         </label>
+        <textarea
+          placeholder="Hakkında (detay sayfasında gösterilecek bilgilendirme metni)"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+          rows={3}
+          className="col-span-full rounded-lg border border-zinc-200 px-3 py-2 dark:border-pink-800 dark:bg-purple-800/40 text-sm"
+        />
         <div className="col-span-full flex flex-col gap-2">
           <label className="flex items-center gap-2 text-sm text-zinc-500 dark:text-pink-200">
             <input

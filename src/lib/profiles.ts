@@ -9,6 +9,9 @@ export type Profile = {
   lastName: string;
   phone: string;
   age: number;
+  city: string;
+  meetingPlace: string;
+  about: string;
   images: string[];
   createdAt: string;
   expiresAt: string;
@@ -70,6 +73,9 @@ export async function addProfile(input: {
   lastName: string;
   phone: string;
   age: number;
+  city: string;
+  meetingPlace: string;
+  about: string;
   images: string[];
   expiresAt?: string;
 }): Promise<Profile> {
@@ -99,6 +105,9 @@ export async function updateProfile(
     lastName: string;
     phone: string;
     age: number;
+    city: string;
+    meetingPlace: string;
+    about: string;
     images: string[];
     expiresAt?: string;
   }
