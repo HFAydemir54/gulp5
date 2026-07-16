@@ -21,26 +21,41 @@ export async function generateMetadata({
   const profile = await getProfileById(userId);
 
   if (!profile) {
-    return { title: "Profil bulunamadı" };
+    return { title: "Escort bulunamadı" };
   }
 
-  const description =
-    profile.about ||
-    `${profile.firstName} kullanıcısının profil detayları ve iletişim bilgileri.`;
+  const fallbackAbout = `${profile.firstName}, ${profile.city || "Pendik"} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`;
+  const about = profile.about || fallbackAbout;
+  const description = profile.about
+    ? `${profile.about} ${profile.city ? `${profile.city} bölgesinde` : ""} escort ${profile.firstName}, ${profile.age ? `${profile.age} yaşında, ` : ""}iletişim bilgileri sitede.`.trim()
+    : `${fallbackAbout} İletişim bilgileri ve detaylar sitede.`;
   const pageUrl = `${siteUrl}/users/${profile.id}`;
+  const keywords = [
+    profile.firstName,
+    "Pendik escort",
+    profile.city,
+    profile.meetingPlace,
+  ].filter(Boolean) as string[];
 
   return {
-    title: `${profile.firstName} | Profil`,
+    title: `${profile.firstName} | Escort`,
     description,
+    keywords,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `${profile.firstName} | Profil`,
-      description,
+      title: `${profile.firstName} | Escort`,
+      description: about,
       url: pageUrl,
       type: "profile",
       images: profile.images?.length ? [{ url: profile.images[0] }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${profile.firstName} | Escort`,
+      description: about,
+      images: profile.images?.length ? [profile.images[0]] : undefined,
     },
   };
 }
@@ -72,8 +87,10 @@ export default async function UserDetailPage({
     address: profile.city
       ? { "@type": "PostalAddress", addressLocality: profile.city }
       : undefined,
-    image: profile.images?.[0],
+    image: profile.images?.length ? profile.images : undefined,
+    telephone: profile.phone || undefined,
     url: `${siteUrl}/users/${profile.id}`,
+    mainEntityOfPage: `${siteUrl}/users/${profile.id}`,
   };
 
   return (
@@ -85,7 +102,7 @@ export default async function UserDetailPage({
       <GtmViewItem profile={profile} />
       <header className="border-b border-pink-900 bg-fuchsia-950 py-4 text-center">
         <h1 className="text-xl font-bold tracking-tight text-pink-50">
-          {profile.firstName}
+          Escort {profile.firstName}
         </h1>
       </header>
 

@@ -19,25 +19,25 @@ const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Pendik Profil",
+  title: "Pendik Escort",
   description:
-    "Pendik bölgesindeki Profil isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
-  keywords: ["Pendik", "Profil", "Profil listesi", "iletişim"],
+    "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
+  keywords: ["Pendik", "Escort", "Escort listesi", "iletişim"],
   openGraph: {
-    title: "Pendik Profil",
+    title: "Pendik Escort",
     description:
-      "Pendik bölgesindeki Profil isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
+      "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
     url: siteUrl,
-    siteName: "Pendik Profil",
+    siteName: "Pendik Escort",
     locale: "tr_TR",
     type: "website",
     images: [{ url: "/icon.jpg", width: 1023, height: 916 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pendik Profil",
+    title: "Pendik Escort",
     description:
-      "Pendik bölgesindeki Profil isim, soyisim ve telefon numarası ile listeleyen profil dizini.",
+      "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
     images: ["/icon.jpg"],
   },
   robots: {

@@ -57,7 +57,7 @@ export async function PUT(
     expiresAt,
   });
   if (!profile) {
-    return NextResponse.json({ error: "Profil bulunamadı" }, { status: 404 });
+    return NextResponse.json({ error: "Escort bulunamadı" }, { status: 404 });
   }
 
   return NextResponse.json(profile);

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type ProfileCardSliderProps = {
   images: string[];
   alt: string;
@@ -6,12 +8,13 @@ type ProfileCardSliderProps = {
 export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProps) {
   if (images.length <= 1) {
     return (
-      <div className="h-24 flex-1 overflow-hidden bg-purple-800/40">
-        <img
+      <div className="relative h-24 flex-1 overflow-hidden bg-purple-800/40">
+        <Image
           src={images[0]}
           alt={alt}
-          loading="lazy"
-          className="h-full w-full object-cover"
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
         />
       </div>
     );
@@ -27,13 +30,9 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
         style={{ animationDuration: `${duration}s` }}
       >
         {loopImages.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={alt}
-            loading="lazy"
-            className="h-24 w-24 shrink-0 object-cover"
-          />
+          <div key={i} className="relative h-24 w-24 shrink-0">
+            <Image src={src} alt={alt} fill sizes="96px" className="object-cover" />
+          </div>
         ))}
       </div>
     </div>

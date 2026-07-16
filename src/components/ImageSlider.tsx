@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
 
 interface ImageSliderProps {
   images: string[];
@@ -70,13 +71,15 @@ export default function ImageSlider({ images }: ImageSliderProps) {
         {images.map((url, index) => (
           <div
             key={index}
-            className="h-full w-full shrink-0 snap-center select-none"
+            className="relative h-full w-full shrink-0 snap-center select-none"
           >
-            <img
+            <Image
               src={url}
-              alt={`Slider Image ${index + 1}`}
-              className="h-full w-full object-cover pointer-events-none"
-              loading={index === 0 ? "eager" : "lazy"}
+              alt={`Görsel ${index + 1}`}
+              fill
+              sizes="(min-width: 768px) 672px, 100vw"
+              className="object-cover pointer-events-none"
+              priority={index === 0}
             />
           </div>
         ))}

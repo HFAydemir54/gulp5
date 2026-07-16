@@ -225,7 +225,7 @@ export default function AdminPage() {
     <div className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-pink-50">
-          Profil Yönetimi
+          Escort Yönetimi
         </h1>
         <button
           onClick={handleLogout}

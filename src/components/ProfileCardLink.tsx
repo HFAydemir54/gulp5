@@ -23,7 +23,7 @@ export default function ProfileCardLink({
       onClick={() =>
         pushToDataLayer({
           event: "select_item",
-          item_list_name: "Profil Listesi",
+          item_list_name: "Escort Listesi",
           items: [profileToGtmItem(profile)],
         })
       }

@@ -17,7 +17,7 @@ export default function BackToListLink({ className }: { className?: string }) {
       }}
       className={className}
     >
-      ← Tüm profiller
+      ← Tüm escortlar
     </button>
   );
 }

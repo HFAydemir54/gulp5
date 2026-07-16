@@ -8,7 +8,7 @@ export default function GtmViewItemList({ profiles }: { profiles: Profile[] }) {
   useEffect(() => {
     pushToDataLayer({
       event: "view_item_list",
-      item_list_name: "Profil Listesi",
+      item_list_name: "Escort Listesi",
       items: profiles.map(profileToGtmItem),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
