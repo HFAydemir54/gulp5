@@ -78,7 +78,7 @@ export default async function UserDetailPage({
 
   const whatsappUrl = toWhatsappUrl(
     profile.phone,
-    `Merhaba ${profile.firstName}, https://www.pendikescortt.com/ sitesi üzerinden ulaşım sağlıyorum.`,
+    `Merhaba ${profile.firstName}, ${siteUrl}/users/${profile.id} sayfası üzerinden ulaşım sağlıyorum.`,
   );
 
   const jsonLd = {
