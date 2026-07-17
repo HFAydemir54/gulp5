@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   description:
     "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
   keywords: ["Pendik", "Escort", "Escort listesi", "iletişim"],
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     title: "Pendik Escort",
     description:

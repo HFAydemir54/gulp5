@@ -10,7 +10,7 @@ import BackToListLink from "@/components/BackToListLink";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
 
 export async function generateMetadata({
   params,
@@ -21,7 +21,11 @@ export async function generateMetadata({
   const profile = await getProfileById(userId);
 
   if (!profile) {
-    return { title: "Escort bulunamadı" };
+    return {
+      title: "Escort bulunamadı",
+      description: "Aradığınız escort ilanı bulunamadı veya kaldırılmış olabilir.",
+      robots: { index: false, follow: false },
+    };
   }
 
   const fallbackAbout = `${profile.firstName}, ${profile.city || "Pendik"} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`;

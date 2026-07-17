@@ -21,6 +21,7 @@ export default async function Home() {
       position: index + 1,
       url: `${siteUrl}/users/${profile.id}`,
       name: profile.firstName,
+      image: profile.images?.length ? profile.images[0] : undefined,
     })),
   };
 
