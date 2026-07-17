@@ -8,7 +8,7 @@ import defaultImage from "@/assets/images/default.webp";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
 
 export default async function Home() {
   const profiles = (await getProfiles()).filter(isProfileActive);
