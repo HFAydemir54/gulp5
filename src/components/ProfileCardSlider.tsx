@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 type ProfileCardSliderProps = {
@@ -6,6 +9,26 @@ type ProfileCardSliderProps = {
 };
 
 export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   if (images.length <= 1) {
     return (
       <div className="relative h-24 flex-1 overflow-hidden bg-purple-800/40">
@@ -24,10 +47,13 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
   const duration = images.length * 3;
 
   return (
-    <div className="h-24 flex-1 overflow-hidden bg-purple-800/40">
+    <div ref={containerRef} className="h-24 flex-1 overflow-hidden bg-purple-800/40">
       <div
         className="flex h-full w-max animate-[card-marquee_linear_infinite]"
-        style={{ animationDuration: `${duration}s` }}
+        style={{
+          animationDuration: `${duration}s`,
+          animationPlayState: isVisible ? "running" : "paused",
+        }}
       >
         {loopImages.map((src, i) => (
           <div key={i} className="relative h-24 w-24 shrink-0">
