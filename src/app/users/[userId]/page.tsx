@@ -7,6 +7,7 @@ import ImageSlider from "@/components/ImageSlider";
 import GtmViewItem from "@/components/GtmViewItem";
 import ContactButtons from "@/components/ContactButtons";
 import BackToListLink from "@/components/BackToListLink";
+import ShareButton from "@/components/ShareButton";
 
 export const dynamic = "force-dynamic";
 
@@ -129,7 +130,14 @@ export default async function UserDetailPage({
         />
 
         <main className="mx-auto min-w-0 w-full max-w-2xl flex-1">
-          <BackToListLink className="text-sm text-[var(--site-muted)] hover:text-[var(--site-accent-strong)]" />
+          <div className="flex items-center justify-between">
+            <BackToListLink className="text-sm text-[var(--site-muted)] hover:text-[var(--site-accent-strong)]" />
+            <ShareButton
+              title={`Escort ${profile.firstName} - ${profile.city}`}
+              url={`${siteUrl}/users/${profile.id}`}
+              className="flex h-9 w-9 items-center justify-center rounded-full text-[var(--site-muted)] transition-colors hover:bg-[var(--site-card-bg)] hover:text-[var(--site-accent-strong)]"
+            />
+          </div>
 
           <div className="mt-4 overflow-hidden rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] shadow-sm">
             {profile.images && profile.images.length > 0 && (
