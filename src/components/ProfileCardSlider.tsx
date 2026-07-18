@@ -8,7 +8,10 @@ type ProfileCardSliderProps = {
   alt: string;
 };
 
-export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProps) {
+export default function ProfileCardSlider({
+  images,
+  alt,
+}: ProfileCardSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -31,7 +34,7 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
 
   if (images.length <= 1) {
     return (
-      <div className="relative h-24 flex-1 overflow-hidden bg-purple-800/40">
+      <div className="relative h-[124px] flex-1 overflow-hidden bg-[var(--site-slider-bg)]">
         <Image
           src={images[0]}
           alt={alt}
@@ -47,7 +50,10 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
   const duration = images.length * 3;
 
   return (
-    <div ref={containerRef} className="h-24 flex-1 overflow-hidden bg-purple-800/40">
+    <div
+      ref={containerRef}
+      className="h-[124px] flex-1 overflow-hidden bg-[var(--site-slider-bg)]"
+    >
       <div
         className="flex h-full w-max animate-[card-marquee_linear_infinite]"
         style={{
@@ -56,8 +62,14 @@ export default function ProfileCardSlider({ images, alt }: ProfileCardSliderProp
         }}
       >
         {loopImages.map((src, i) => (
-          <div key={i} className="relative h-24 w-24 shrink-0">
-            <Image src={src} alt={alt} fill sizes="96px" className="object-cover" />
+          <div key={i} className="relative h-[124px] w-[124px] shrink-0">
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              sizes="96px"
+              className="object-cover"
+            />
           </div>
         ))}
       </div>

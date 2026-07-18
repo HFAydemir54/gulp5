@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import ImageLightbox from "./ImageLightbox";
 
 interface ImageSliderProps {
   images: string[];
@@ -10,6 +11,7 @@ interface ImageSliderProps {
 export default function ImageSlider({ images }: ImageSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Update active dot index based on scroll position
   const handleScroll = () => {
@@ -60,7 +62,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="group relative w-full overflow-hidden bg-purple-800/40 aspect-video md:aspect-[21/9]">
+    <div className="group relative w-full overflow-hidden bg-[var(--site-slider-bg)] aspect-video md:aspect-[21/9]">
       {/* Slider Container */}
       <div
         ref={sliderRef}
@@ -71,7 +73,8 @@ export default function ImageSlider({ images }: ImageSliderProps) {
         {images.map((url, index) => (
           <div
             key={index}
-            className="relative h-full w-full shrink-0 snap-center select-none"
+            className="relative h-full w-full shrink-0 snap-center cursor-zoom-in select-none"
+            onClick={() => setLightboxIndex(index)}
           >
             <Image
               src={url}
@@ -146,6 +149,14 @@ export default function ImageSlider({ images }: ImageSliderProps) {
             ))}
           </div>
         </>
+      )}
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={images}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
       )}
     </div>
   );

@@ -3,6 +3,22 @@
 :root {
   --background: #2e1065;
   --foreground: #fdf2f8;
+
+  /* Site theme tokens — change these to re-theme the whole site */
+  --site-bg: #2e1065;
+  --site-header-bg: #4a044e;
+  --site-border: #581c47;
+  --site-card-bg: rgba(88, 28, 135, 0.4);
+  --site-slider-bg: rgba(107, 33, 168, 0.4);
+  --site-text: #fdf2f8;
+  --site-muted: #f9a8d4;
+  --site-accent: #fce7f3;
+  --site-accent-strong: #fce7f3;
+  --site-accent-hover: #fbcfe8;
+  --site-accent-text: #581c87;
+  --site-banner-bg: rgba(88, 28, 135, 0.2);
+  --site-banner-bg-hover: rgba(88, 28, 135, 0.4);
+  --site-banner-border: rgba(131, 24, 67, 0.6);
 }
 
 @theme inline {

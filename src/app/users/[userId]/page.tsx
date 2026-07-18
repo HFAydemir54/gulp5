@@ -10,7 +10,8 @@ import BackToListLink from "@/components/BackToListLink";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
 
 export async function generateMetadata({
   params,
@@ -23,7 +24,8 @@ export async function generateMetadata({
   if (!profile) {
     return {
       title: "Escort bulunamadı",
-      description: "Aradığınız escort ilanı bulunamadı veya kaldırılmış olabilir.",
+      description:
+        "Aradığınız escort ilanı bulunamadı veya kaldırılmış olabilir.",
       robots: { index: false, follow: false },
     };
   }
@@ -40,16 +42,25 @@ export async function generateMetadata({
     profile.city,
     profile.meetingPlace,
   ].filter(Boolean) as string[];
+  const title = [
+    "Pendik Escort",
+    profile.firstName,
+    profile.city,
+    profile.meetingPlace,
+    profile.age,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return {
-    title: `${profile.firstName} | Escort`,
+    title,
     description,
     keywords,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `${profile.firstName} | Escort`,
+      title,
       description: about,
       url: pageUrl,
       type: "profile",
@@ -57,7 +68,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${profile.firstName} | Escort`,
+      title,
       description: about,
       images: profile.images?.length ? [profile.images[0]] : undefined,
     },
@@ -98,15 +109,15 @@ export default async function UserDetailPage({
   };
 
   return (
-    <div className="flex flex-1 flex-col bg-purple-950">
+    <div className="flex flex-1 flex-col bg-[var(--site-bg)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <GtmViewItem profile={profile} />
-      <header className="border-b border-pink-900 bg-fuchsia-950 py-4 text-center">
-        <h1 className="text-xl font-bold tracking-tight text-pink-50">
-          Escort {profile.firstName}
+      <header className="border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
+        <h1 className="text-xl font-bold tracking-tight text-[var(--site-accent-strong)]">
+          Escort {profile.firstName} - {profile.city}
         </h1>
       </header>
 
@@ -118,35 +129,37 @@ export default async function UserDetailPage({
         />
 
         <main className="mx-auto min-w-0 w-full max-w-2xl flex-1">
-          <BackToListLink className="text-sm text-pink-300 hover:text-pink-100" />
+          <BackToListLink className="text-sm text-[var(--site-muted)] hover:text-[var(--site-accent-strong)]" />
 
-          <div className="mt-4 overflow-hidden rounded-xl border border-pink-900 bg-purple-900/40 shadow-sm">
+          <div className="mt-4 overflow-hidden rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] shadow-sm">
             {profile.images && profile.images.length > 0 && (
               <ImageSlider images={profile.images} />
             )}
             <div className="p-6">
               <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-lg border border-pink-900 bg-purple-800/40 p-3">
-                  <p className="text-xs text-pink-300">İsim</p>
-                  <p className="text-sm font-medium text-pink-50">
+                <div className="rounded-lg border border-[var(--site-border)] bg-[var(--site-card-bg)] p-3">
+                  <p className="text-xs text-[var(--site-muted)]">İsim</p>
+                  <p className="text-sm font-medium text-[var(--site-text)]">
                     {profile.firstName}
                   </p>
                 </div>
-                <div className="rounded-lg border border-pink-900 bg-purple-800/40 p-3">
-                  <p className="text-xs text-pink-300">Yaş</p>
-                  <p className="text-sm font-medium text-pink-50">
+                <div className="rounded-lg border border-[var(--site-border)] bg-[var(--site-card-bg)] p-3">
+                  <p className="text-xs text-[var(--site-muted)]">Yaş</p>
+                  <p className="text-sm font-medium text-[var(--site-text)]">
                     {profile.age}
                   </p>
                 </div>
-                <div className="rounded-lg border border-pink-900 bg-purple-800/40 p-3">
-                  <p className="text-xs text-pink-300">Şehir</p>
-                  <p className="text-sm font-medium text-pink-50">
+                <div className="rounded-lg border border-[var(--site-border)] bg-[var(--site-card-bg)] p-3">
+                  <p className="text-xs text-[var(--site-muted)]">Şehir</p>
+                  <p className="text-sm font-medium text-[var(--site-text)]">
                     {profile.city || "—"}
                   </p>
                 </div>
-                <div className="rounded-lg border border-pink-900 bg-purple-800/40 p-3">
-                  <p className="text-xs text-pink-300">Buluşma Yeri</p>
-                  <p className="text-sm font-medium text-pink-50">
+                <div className="rounded-lg border border-[var(--site-border)] bg-[var(--site-card-bg)] p-3">
+                  <p className="text-xs text-[var(--site-muted)]">
+                    Buluşma Yeri
+                  </p>
+                  <p className="text-sm font-medium text-[var(--site-text)]">
                     {profile.meetingPlace || "—"}
                   </p>
                 </div>
@@ -154,9 +167,11 @@ export default async function UserDetailPage({
 
               <ContactButtons profile={profile} whatsappUrl={whatsappUrl} />
 
-              <div className="mt-6 border-t border-pink-900 pt-6">
-                <h2 className="text-sm font-semibold text-pink-50">Hakkında</h2>
-                <p className="mt-2 text-sm leading-relaxed text-pink-300">
+              <div className="mt-6 border-t border-[var(--site-border)] pt-6">
+                <h2 className="text-sm font-semibold text-[var(--site-text)]">
+                  Hakkında
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--site-muted)]">
                   {profile.about ||
                     `${profile.firstName}, ${profile.city || "belirtilmemiş şehir"} bölgesinde ${profile.meetingPlace || "belirtilmemiş bir buluşma noktasında"} görüşmeler için listede yer alıyor.`}
                 </p>

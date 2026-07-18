@@ -24,12 +24,12 @@ export default function ContactButtons({ profile, whatsappUrl }: ContactButtonsP
               items: [profileToGtmItem(profile)],
             })
           }
-          className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-pink-100 px-4 py-3 text-sm font-medium text-purple-900 transition hover:bg-pink-200"
+          className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[var(--site-accent)] px-4 py-3 text-sm font-medium text-[var(--site-accent-text)] transition hover:bg-[var(--site-accent-hover)]"
         >
           Telefon ile Ara
         </a>
       ) : (
-        <p className="flex flex-1 items-center justify-center rounded-lg bg-purple-900/40 px-4 py-3 text-sm text-pink-300">
+        <p className="flex flex-1 items-center justify-center rounded-lg bg-[var(--site-card-bg)] px-4 py-3 text-sm text-[var(--site-muted)]">
           Telefon numarası geçersiz
         </p>
       )}
@@ -50,7 +50,7 @@ export default function ContactButtons({ profile, whatsappUrl }: ContactButtonsP
           WhatsApp&apos;tan Yaz
         </a>
       ) : (
-        <p className="flex flex-1 items-center justify-center rounded-lg bg-purple-900/40 px-4 py-3 text-sm text-pink-300">
+        <p className="flex flex-1 items-center justify-center rounded-lg bg-[var(--site-card-bg)] px-4 py-3 text-sm text-[var(--site-muted)]">
           WhatsApp numarası geçersiz
         </p>
       )}

@@ -14,12 +14,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Pendik Escort",
+  title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
   description:
     "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
   keywords: ["Pendik", "Escort", "Escort listesi", "iletişim"],
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     canonical: siteUrl,
   },
   openGraph: {
-    title: "Pendik Escort",
+    title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
     description:
       "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
     url: siteUrl,
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pendik Escort",
+    title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
     description:
       "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
     images: ["/icon.jpg"],
