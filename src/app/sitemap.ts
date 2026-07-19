@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getProfiles } from "@/lib/profiles";
+import { SITE_URL } from "@/lib/site";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl = SITE_URL;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const profiles = await getProfiles();

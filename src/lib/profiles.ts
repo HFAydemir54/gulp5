@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
 import { kv } from "@vercel/kv";
+import { SITE_KEY } from "@/lib/site";
 
 export type Profile = {
   id: string;
@@ -23,32 +24,40 @@ export function isProfileActive(profile: Profile): boolean {
   return Date.now() < new Date(profile.expiresAt).getTime();
 }
 
-const DATA_FILE = path.join(process.cwd(), "data", "profiles.json");
+// "pendik" (varsayılan site) prod KV'de geriye dönük uyumluluk için mevcut
+// "profiles" key'ini kullanmaya devam eder; diğer domainler kendi key'ine yazar.
+const KV_KEY = SITE_KEY === "pendik" ? "profiles" : `profiles:${SITE_KEY}`;
+const DATA_FILE = path.join(process.cwd(), "data", `profiles.${SITE_KEY}.json`);
 
 async function readAll(): Promise<Profile[]> {
   if (process.env.KV_REST_API_URL) {
     try {
-      const data = await kv.get<Profile[]>("profiles");
+      const data = await kv.get<Profile[]>(KV_KEY);
       if (data) return data;
 
       // KV empty, populate from local json file
       const localRaw = await fs.readFile(DATA_FILE, "utf-8");
       const localProfiles = JSON.parse(localRaw);
-      await kv.set("profiles", localProfiles);
+      await kv.set(KV_KEY, localProfiles);
       return localProfiles;
     } catch (err) {
       console.error("Vercel KV read error, falling back to local files:", err);
     }
   }
 
-  const raw = await fs.readFile(DATA_FILE, "utf-8");
-  return JSON.parse(raw);
+  try {
+    const raw = await fs.readFile(DATA_FILE, "utf-8");
+    return JSON.parse(raw);
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw err;
+  }
 }
 
 async function writeAll(profiles: Profile[]): Promise<void> {
   if (process.env.KV_REST_API_URL) {
     try {
-      await kv.set("profiles", profiles);
+      await kv.set(KV_KEY, profiles);
       return;
     } catch (err) {
       console.error("Vercel KV write error, falling back to local files:", err);

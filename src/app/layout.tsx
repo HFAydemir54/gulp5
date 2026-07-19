@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { GTM_ID } from "@/lib/gtm";
+import { SITE_CITY, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,34 +15,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl = SITE_URL;
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+const title = `${SITE_NAME} | Güncel Escort İlanları ve Profilleri`;
+const description = `${SITE_CITY} escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
-  description:
-    "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
-  keywords: ["Pendik", "Escort", "Escort listesi", "iletişim"],
+  title,
+  description,
+  keywords: [SITE_CITY, "Escort", "Escort listesi", "iletişim"],
   alternates: {
     canonical: siteUrl,
   },
   openGraph: {
-    title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
-    description:
-      "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
+    title,
+    description,
     url: siteUrl,
-    siteName: "Pendik Escort",
+    siteName: SITE_NAME,
     locale: "tr_TR",
     type: "website",
     images: [{ url: "/icon.jpg", width: 1023, height: 916 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pendik Escort | Güncel Escort İlanları ve Profilleri",
-    description:
-      "Pendik escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.",
+    title,
+    description,
     images: ["/icon.jpg"],
   },
   robots: {
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   verification: {
-    google: "AgfmUTrd-jTelNJAnQ9Y75HOquKMmGHly63zFV97wTU",
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
   },
 };
 

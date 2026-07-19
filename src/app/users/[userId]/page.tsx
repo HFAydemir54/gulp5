@@ -8,11 +8,11 @@ import GtmViewItem from "@/components/GtmViewItem";
 import ContactButtons from "@/components/ContactButtons";
 import BackToListLink from "@/components/BackToListLink";
 import ShareButton from "@/components/ShareButton";
+import { SITE_CITY, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl = SITE_URL;
 
 export async function generateMetadata({
   params,
@@ -31,7 +31,7 @@ export async function generateMetadata({
     };
   }
 
-  const fallbackAbout = `${profile.firstName}, ${profile.city || "Pendik"} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`;
+  const fallbackAbout = `${profile.firstName}, ${profile.city || SITE_CITY} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`;
   const about = profile.about || fallbackAbout;
   const description = profile.about
     ? `${profile.about} ${profile.city ? `${profile.city} bölgesinde` : ""} escort ${profile.firstName}, ${profile.age ? `${profile.age} yaşında, ` : ""}iletişim bilgileri sitede.`.trim()
@@ -39,12 +39,12 @@ export async function generateMetadata({
   const pageUrl = `${siteUrl}/users/${profile.id}`;
   const keywords = [
     profile.firstName,
-    "Pendik escort",
+    `${SITE_CITY} escort`,
     profile.city,
     profile.meetingPlace,
   ].filter(Boolean) as string[];
   const title = [
-    "Pendik Escort",
+    SITE_NAME,
     profile.firstName,
     profile.city,
     profile.meetingPlace,

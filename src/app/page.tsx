@@ -5,11 +5,11 @@ import ProfileCardSlider from "@/components/ProfileCardSlider";
 import ProfileCardLink from "@/components/ProfileCardLink";
 import GtmViewItemList from "@/components/GtmViewItemList";
 import defaultImage from "@/assets/images/default.webp";
+import { SITE_CITY, SITE_NAME, SITE_URL, SITE_WHATSAPP } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.pendikescortt.com";
+const siteUrl = SITE_URL;
 
 function shuffle<T>(items: T[]): T[] {
   const result = [...items];
@@ -26,14 +26,14 @@ export default async function Home() {
   const heroSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Pendik Escort - Güncel Escort İlanları",
+    name: `${SITE_NAME} - Güncel Escort İlanları`,
     description:
-      "Pendik escort ve çevresindeki en güncel escort ilanları. Güvenilir ve kaliteli hizmet arayanlar için özel profiller.",
+      `${SITE_CITY} escort ve çevresindeki en güncel escort ilanları. Güvenilir ve kaliteli hizmet arayanlar için özel profiller.`,
     url: siteUrl,
     mainEntity: {
       "@type": "ItemList",
-      name: "Pendik Escort İlanları",
-      description: "Pendik ve çevresindeki aktif escort ilanları",
+      name: `${SITE_NAME} İlanları`,
+      description: `${SITE_CITY} ve çevresindeki aktif escort ilanları`,
       itemListElement: profiles.map((profile, index) => ({
         "@type": "ListItem",
         position: index + 1,
@@ -43,12 +43,12 @@ export default async function Home() {
           name: profile.firstName,
           description:
             profile.about ||
-            `Pendik escort ${profile.firstName}, ${profile.city || "Pendik"} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`,
+            `${SITE_CITY} escort ${profile.firstName}, ${profile.city || SITE_CITY} bölgesinde ${profile.meetingPlace || "görüşme"} için listede yer alıyor.`,
           age: profile.age,
           image: profile.images?.length ? profile.images[0] : undefined,
           memberOf: {
             "@type": "Organization",
-            name: "Pendik Escort",
+            name: SITE_NAME,
             url: siteUrl,
           },
         },
@@ -68,14 +68,14 @@ export default async function Home() {
           className="font-bold italic tracking-tight text-[var(--site-accent-strong)]"
           style={{ fontSize: "26px" }}
         >
-          🔥❤️‍🔥 Pendik Escort 🔥❤️‍🔥
+          🔥❤️‍🔥 {SITE_NAME} 🔥❤️‍🔥
         </h1>
       </header>
 
       {/* WhatsApp Call to Action Banner */}
       <div className="mx-auto w-full max-w-7xl px-4 pt-3">
         <a
-          href="https://wa.me/905312392985?text=Merhaba%2C%20ilanımı%20yayınlamak%20istiyorum."
+          href={`https://wa.me/${SITE_WHATSAPP}?text=Merhaba%2C%20ilanımı%20yayınlamak%20istiyorum.`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-3 rounded-xl border border-[var(--site-banner-border)] bg-[var(--site-banner-bg)] px-4 py-3 transition-colors hover:bg-[var(--site-banner-bg-hover)]"

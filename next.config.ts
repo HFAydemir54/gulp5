@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "obnimi.shop",
       },
+      {
+        protocol: "https",
+        hostname: "www.elazig3.xyz",
+      },
     ],
   },
 };
