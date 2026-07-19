@@ -3,9 +3,9 @@ import { v2 as cloudinary } from "cloudinary";
 import { isAdminAuthenticated } from "@/lib/auth";
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "fkxu8f0m",
+  api_key: process.env.CLOUDINARY_API_KEY || "858247329839718",
+  api_secret: process.env.CLOUDINARY_API_SECRET || "EPYy3bJvT2kUk2kj9DIhnsNUyWU",
 });
 
 export async function POST(request: NextRequest) {
