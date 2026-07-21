@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "tr_TR",
     type: "website",
-    images: [{ url: "/icon.jpg", width: 1023, height: 916 }],
+    images: [{ url: "/icon.png", width: 512, height: 512 }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["/icon.jpg"],
+    images: ["/icon.png"],
   },
   robots: {
     index: true,
