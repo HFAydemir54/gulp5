@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     `${SITE_CITY} Escort`,
     `escort ${SITE_CITY}`,
     `Escort ${SITE_CITY}`,
-    `Escort İlanları`,
+    `${SITE_CITY} escort ilanları`,
   ],
   alternates: {
     canonical: siteUrl,
