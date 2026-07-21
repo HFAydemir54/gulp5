@@ -24,7 +24,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
-  keywords: [SITE_CITY, "Escort", "Escort listesi", "iletişim"],
+  keywords: [
+    `${SITE_CITY} escort`,
+    `${SITE_CITY} Escort`,
+    `escort ${SITE_CITY}`,
+    `Escort ${SITE_CITY}`,
+    `Escort İlanları`,
+  ],
   alternates: {
     canonical: siteUrl,
   },
