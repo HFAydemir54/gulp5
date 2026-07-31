@@ -25,11 +25,10 @@ export const metadata: Metadata = {
   title,
   description,
   keywords: [
-    `${SITE_CITY} escort`,
-    `${SITE_CITY} Escort`,
-    `escort ${SITE_CITY}`,
-    `Escort ${SITE_CITY}`,
-    `${SITE_CITY} escort ilanları`,
+    `${SITE_CITY.toLocaleLowerCase("tr-TR")} escort`,
+    `${SITE_CITY.toLocaleLowerCase("tr-TR")} eskort`,
+    `${SITE_CITY.toLocaleLowerCase("tr-TR")} escort travesti`,
+    `${SITE_CITY.toLocaleLowerCase("tr-TR")} eskort travesti`,
   ],
   alternates: {
     canonical: siteUrl,
