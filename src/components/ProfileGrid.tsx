@@ -1,4 +1,3 @@
-import Image from "next/image";
 import ProfileCardLink from "@/components/ProfileCardLink";
 import ProfileCardSlider from "@/components/ProfileCardSlider";
 import defaultImage from "@/assets/images/default.webp";
@@ -25,14 +24,13 @@ export default function ProfileGrid({
           listName={listName}
           className="relative flex items-stretch gap-1 overflow-hidden rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] shadow-sm transition hover:shadow-md"
         >
-          <div className="absolute left-0 top-0 z-10 h-full w-[35%] overflow-hidden">
-            <Image
-              src={defaultImage}
-              alt=""
-              fill
-              sizes="35vw"
-              className="object-cover"
-            />
+          {/* Dekoratif arka plan: her kartta ayrı bir <img> ve 11 girdilik
+              srcset üretiyordu. Aynı statik dosya olduğu için CSS arka planına
+              çevrildi; görünüm aynı, listede 49 <img> eksiliyor. */}
+          <div
+            className="absolute left-0 top-0 z-10 h-full w-[35%] overflow-hidden bg-cover bg-center"
+            style={{ backgroundImage: `url(${defaultImage.src})` }}
+          >
             <div className="absolute top-2 left-2 flex flex-col gap-4 italic text-white">
               <h3 className="text-[15px] font-medium leading-tight">
                 <span style={{ textShadow: "none" }}>👸</span>

@@ -46,7 +46,12 @@ export default function ProfileCardSlider({
     );
   }
 
-  const loopImages = [...images, ...images];
+  // Kesintisiz döngü için dizinin iki kez basılması gerekiyor, ama bunu
+  // sunucuda yapmak liste sayfasındaki görsel sayısını (ve HTML boyutunu)
+  // ikiye katlıyordu. İkinci kopyayı yalnızca kart görüntüye girip animasyon
+  // başlayacağı anda ekliyoruz; o ana kadar tek kopya yeterli çünkü animasyon
+  // zaten duraklatılmış durumda.
+  const loopImages = isVisible ? [...images, ...images] : images;
   const duration = images.length * 3;
 
   return (
@@ -61,16 +66,19 @@ export default function ProfileCardSlider({
           animationPlayState: isVisible ? "running" : "paused",
         }}
       >
+        {/* Sabit 124px küçük resim: bilerek `sizes` vermiyoruz. `sizes` ile
+            birlikte Next her görsel için tüm genişlikleri içeren uzun bir
+            srcset basıyor ve liste sayfasında yüzlerce görselle bu tek başına
+            yüzlerce KB HTML demek. Boyut sabit olduğu için 1x/2x yeterli. */}
         {loopImages.map((src, i) => (
-          <div key={i} className="relative h-[124px] w-[124px] shrink-0">
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              sizes="96px"
-              className="object-cover"
-            />
-          </div>
+          <Image
+            key={i}
+            src={src}
+            alt={alt}
+            width={124}
+            height={124}
+            className="h-[124px] w-[124px] shrink-0 object-cover"
+          />
         ))}
       </div>
     </div>
