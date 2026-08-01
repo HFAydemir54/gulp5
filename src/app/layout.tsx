@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { GTM_ID } from "@/lib/gtm";
+import SiteFooter from "@/components/SiteFooter";
 import { SITE_CITY, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -87,6 +88,7 @@ export default function RootLayout({
           </>
         )}
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
