@@ -1,43 +1,71 @@
-import Image from "next/image";
-import { getProfiles, isProfileActive } from "@/lib/profiles";
+import Link from "next/link";
+import { getProfiles, isProfileActive, type Profile } from "@/lib/profiles";
 import AdSlot from "@/components/AdSlot";
-import ProfileCardSlider from "@/components/ProfileCardSlider";
-import ProfileCardLink from "@/components/ProfileCardLink";
+import ProfileGrid from "@/components/ProfileGrid";
 import GtmViewItemList from "@/components/GtmViewItemList";
-import defaultImage from "@/assets/images/default.webp";
+import CategoryNav from "@/components/CategoryNav";
+import { CATEGORIES, applyCategory, categoryPath } from "@/lib/categories";
+import { profilePath } from "@/lib/slug";
 import { SITE_CITY, SITE_NAME, SITE_URL, SITE_WHATSAPP } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
 const siteUrl = SITE_URL;
 
-function shuffle<T>(items: T[]): T[] {
+// Her istekte rastgele sıralama, arama motoruna her taramada farklı bir sayfa
+// gösterir ve sıralama sinyallerini zayıflatır. Bunun yerine güne göre sabit
+// bir tohumla karıştırıyoruz: gün içinde sıra sabit, her gün ilanlar döner.
+function dailySeed(): number {
+  const now = new Date();
+  return (
+    now.getUTCFullYear() * 10000 + (now.getUTCMonth() + 1) * 100 + now.getUTCDate()
+  );
+}
+
+function seededShuffle<T>(items: T[], seed: number): T[] {
   const result = [...items];
+  let state = seed || 1;
+  const next = () => {
+    // Mulberry32 — küçük ve deterministik bir PRNG.
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+
   for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(next() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
 }
 
 export default async function Home() {
-  const profiles = shuffle((await getProfiles()).filter(isProfileActive));
+  const active = (await getProfiles()).filter(isProfileActive);
+  const profiles = seededShuffle(active, dailySeed());
+
+  // Kategori linklerinin yanında ilan sayısını göstermek hem kullanıcıya
+  // bilgi verir hem de iç linklere bağlam kazandırır.
+  const categoryCounts = CATEGORIES.map((category) => ({
+    category,
+    count: applyCategory(category, active).length,
+  })).filter(({ count }) => count > 0);
 
   const heroSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: `${SITE_NAME} - Güncel Escort İlanları`,
-    description:
-      `${SITE_CITY} escort ve çevresindeki en güncel escort ilanları. Güvenilir ve kaliteli hizmet arayanlar için özel profiller.`,
+    description: `${SITE_CITY} escort ve çevresindeki en güncel escort ilanları. Güvenilir ve kaliteli hizmet arayanlar için özel profiller.`,
     url: siteUrl,
     mainEntity: {
       "@type": "ItemList",
       name: `${SITE_NAME} İlanları`,
       description: `${SITE_CITY} ve çevresindeki aktif escort ilanları`,
-      itemListElement: profiles.map((profile, index) => ({
+      numberOfItems: profiles.length,
+      itemListElement: profiles.map((profile: Profile, index: number) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${siteUrl}/users/${profile.id}`,
+        url: `${siteUrl}${profilePath(profile)}`,
         item: {
           "@type": "Person",
           name: profile.firstName,
@@ -102,77 +130,33 @@ export default async function Home() {
         />
 
         <main className="min-w-0 flex-1">
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {profiles.map((profile) => (
-              <ProfileCardLink
-                key={profile.id}
-                profile={profile}
-                className="relative flex items-stretch gap-1 overflow-hidden rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] shadow-sm transition hover:shadow-md"
-              >
-                <div className="absolute left-0 top-0 z-10 h-full w-[35%] overflow-hidden">
-                  <Image
-                    src={defaultImage}
-                    alt=""
-                    fill
-                    sizes="35vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute top-2 left-2 flex flex-col gap-4 italic text-white">
-                    <h3 className="text-[15px] font-medium leading-tight">
-                      <span style={{ textShadow: "none" }}>👸</span>
-                      &nbsp;
-                      <span
-                        style={{
-                          textShadow:
-                            "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-                        }}
-                      >
-                        {profile.firstName}
-                      </span>
-                    </h3>
-                    {profile.city && (
-                      <p className="text-[13px] leading-tight">
-                        <span style={{ textShadow: "none" }}>📍</span>
-                        &nbsp;
-                        <span
-                          style={{
-                            textShadow:
-                              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-                          }}
-                        >
-                          {profile.city}
-                        </span>
-                      </p>
-                    )}
-                    {profile.meetingPlace && (
-                      <p className="text-[13px] leading-tight">
-                        <span style={{ textShadow: "none" }}>🛏️</span>
-                        &nbsp;
-                        <span
-                          style={{
-                            textShadow:
-                              "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-                          }}
-                        >
-                          {profile.meetingPlace}
-                        </span>
-                      </p>
-                    )}
-                  </div>
-                </div>
-                {profile.images && profile.images.length > 0 ? (
-                  <ProfileCardSlider
-                    images={profile.images}
-                    alt={profile.firstName}
-                  />
-                ) : (
-                  <div className="flex h-[124px] flex-1 items-center justify-center bg-[var(--site-card-bg)] text-sm font-semibold text-[var(--site-muted)]">
-                    {profile.firstName[0]}
-                  </div>
-                )}
-              </ProfileCardLink>
-            ))}
-          </div>
+          <CategoryNav className="mb-4" />
+
+          <ProfileGrid profiles={profiles} listName="Escort Listesi" />
+
+          {categoryCounts.length > 0 && (
+            <section className="mt-8 rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] p-4">
+              <h2 className="text-base font-semibold text-[var(--site-text)]">
+                {SITE_CITY} escort kategorileri
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {categoryCounts.map(({ category, count }) => (
+                  <li key={category.slug} className="text-sm">
+                    <Link
+                      href={categoryPath(category)}
+                      className="font-medium text-[var(--site-accent-strong)] underline"
+                    >
+                      {category.h1}
+                    </Link>
+                    <span className="text-[var(--site-muted)]">
+                      {" "}
+                      — {count} aktif ilan. {category.description}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <AdSlot
             slotId="3333333333"

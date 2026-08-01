@@ -1,3 +1,5 @@
+import { slugify } from "@/lib/slug";
+
 function capitalize(value: string): string {
   return value.charAt(0).toLocaleUpperCase("tr-TR") + value.slice(1);
 }
@@ -33,18 +35,8 @@ export const SITE_WHATSAPP =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "905312392985";
 export const SITE_NAME = `${SITE_CITY} Escort`;
 
-function slugify(value: string): string {
-  return value
-    .toLocaleLowerCase("tr-TR")
-    .replace(/ı/g, "i")
-    .replace(/ğ/g, "g")
-    .replace(/ü/g, "u")
-    .replace(/ş/g, "s")
-    .replace(/ö/g, "o")
-    .replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+// Kategori URL'lerinde kullanılan şehir öneki: "elazig", "pendik"...
+export const SITE_CITY_SLUG = slugify(SITE_CITY);
 
 // Her domain'in kendi profil verisini kullanması için ayırt edici anahtar
 // (data/profiles.<key>.json dosya adında ve KV key'inde kullanılır)

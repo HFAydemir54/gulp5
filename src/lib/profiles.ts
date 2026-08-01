@@ -3,6 +3,7 @@ import path from "path";
 import { randomUUID } from "crypto";
 import { kv } from "@vercel/kv";
 import { SITE_KEY } from "@/lib/site";
+import { profileIdPrefix } from "@/lib/slug";
 
 export type Profile = {
   id: string;
@@ -74,6 +75,14 @@ export async function getProfiles(): Promise<Profile[]> {
 export async function getProfileById(id: string): Promise<Profile | null> {
   const profiles = await readAll();
   return profiles.find((p) => p.id === id) ?? null;
+}
+
+// URL slug'ının sonundaki kısa id ön ekinden profili bulur.
+export async function getProfileByIdPrefix(
+  prefix: string
+): Promise<Profile | null> {
+  const profiles = await readAll();
+  return profiles.find((p) => profileIdPrefix(p.id) === prefix) ?? null;
 }
 
 export async function addProfile(input: {
