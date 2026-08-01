@@ -1,4 +1,7 @@
-export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-PPQLDS5C";
+// Sabit bir yedek ID vermiyoruz: env tanımlanmayan bir domain, sessizce başka
+// bir sitenin konteynerine veri göndermeye başlıyordu ve iki sitenin analitiği
+// birbirine karışıyordu. Tanımsızsa GTM hiç yüklenmez.
+export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
 
 declare global {
   interface Window {
