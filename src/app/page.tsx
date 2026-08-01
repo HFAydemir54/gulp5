@@ -3,6 +3,7 @@ import { getProfiles, isProfileActive, type Profile } from "@/lib/profiles";
 import ProfileGrid from "@/components/ProfileGrid";
 import GtmViewItemList from "@/components/GtmViewItemList";
 import CategoryNav from "@/components/CategoryNav";
+import SearchOverlay from "@/components/SearchOverlay";
 import { CATEGORIES, applyCategory, categoryPath } from "@/lib/categories";
 import { profilePath } from "@/lib/slug";
 import { SITE_CITY, SITE_NAME, SITE_URL, SITE_WHATSAPP } from "@/lib/site";
@@ -90,7 +91,7 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(heroSchema) }}
       />
       <GtmViewItemList profiles={profiles} />
-      <header className="border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
+      <header className="relative border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
         {/* Emojiler h1'in dışında: başlık etiketi yalnızca hedef anahtar
             kelimeyi içersin, süsleme arama motoruna gürültü olarak gitmesin. */}
         <div
@@ -101,6 +102,7 @@ export default async function Home() {
           <h1 className="inline">{SITE_NAME}</h1>
           <span aria-hidden="true"> 🔥❤️‍🔥</span>
         </div>
+        <SearchOverlay profiles={active} />
       </header>
 
       {/* WhatsApp Call to Action Banner */}

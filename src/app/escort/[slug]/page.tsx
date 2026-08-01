@@ -318,7 +318,7 @@ export default async function EscortDetailPage({
               firstName: profile.firstName,
               city: profile.city,
               meetingPlace: profile.meetingPlace,
-              image: profile.images?.[0] ?? null,
+              images: profile.images ?? [],
               expiresAt: profile.expiresAt,
             }}
           />

@@ -2,30 +2,12 @@
 
 import { useEffect, useState } from "react";
 import ProfileGrid from "@/components/ProfileGrid";
-import type { Profile } from "@/lib/profiles";
 import {
   addRecentlyViewed,
   getRecentlyViewed,
+  toProfile,
   type RecentlyViewedProfile,
 } from "@/lib/recentlyViewed";
-
-// localStorage'daki kayıt sadece kart görünümü için gereken alanları tutar;
-// ProfileGrid'in beklediği tam Profile tipine, kullanılmayan alanlar boş
-// bırakılarak uyarlanır.
-function toProfile(item: RecentlyViewedProfile): Profile {
-  return {
-    id: item.id,
-    firstName: item.firstName,
-    city: item.city,
-    meetingPlace: item.meetingPlace,
-    images: item.image ? [item.image] : [],
-    phone: "",
-    age: 0,
-    about: "",
-    createdAt: "",
-    expiresAt: item.expiresAt,
-  };
-}
 
 // Kişiselleştirme localStorage'a bağlı olduğu için sunucu tarafında
 // render edilmez; ilk yüklemede boş döner, arama motoruna içerik olarak
@@ -39,6 +21,9 @@ export default function RecentlyViewed({
   const [items, setItems] = useState<RecentlyViewedProfile[]>([]);
 
   useEffect(() => {
+    // localStorage'a erişim sadece client'ta mümkün; sunucu render'ıyla
+    // eşleşmesi için bu okuma bilerek effect içinde yapılıyor.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(getRecentlyViewed().filter((item) => item.id !== profile.id));
     addRecentlyViewed(profile);
   }, [profile]);

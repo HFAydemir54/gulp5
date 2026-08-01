@@ -1,9 +1,11 @@
+import type { Profile } from "@/lib/profiles";
+
 export type RecentlyViewedProfile = {
   id: string;
   firstName: string;
   city: string;
   meetingPlace: string;
-  image: string | null;
+  images: string[];
   expiresAt: string;
 };
 
@@ -34,6 +36,24 @@ export function getRecentlyViewed(): RecentlyViewedProfile[] {
   } catch {
     return [];
   }
+}
+
+// Kayıt sadece kart görünümü için gereken alanları tutar; ProfileGrid'in
+// beklediği tam Profile tipine, kullanılmayan alanlar boş bırakılarak
+// uyarlanır.
+export function toProfile(item: RecentlyViewedProfile): Profile {
+  return {
+    id: item.id,
+    firstName: item.firstName,
+    city: item.city,
+    meetingPlace: item.meetingPlace,
+    images: item.images,
+    phone: "",
+    age: 0,
+    about: "",
+    createdAt: "",
+    expiresAt: item.expiresAt,
+  };
 }
 
 export function addRecentlyViewed(profile: RecentlyViewedProfile): void {
