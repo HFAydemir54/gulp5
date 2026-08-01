@@ -4,7 +4,11 @@ import { SITE_CITY, SITE_CITY_SLUG } from "@/lib/site";
 export type Category = {
   // URL'de görünen tam slug: "elazig-travesti-escort"
   slug: string;
-  h1: string;
+  // Sayfadaki h1 metni. Anahtar kelimenin birebir karşılığı olsun diye kısa
+  // tutulur; süsleme ve ek kelimeler h1'in dışında kalır.
+  heading: string;
+  // Breadcrumb, şema ve liste adlarında kullanılan uzun başlık.
+  name: string;
   title: string;
   description: string;
   // Sayfanın kendine özgü tanıtım metni (thin content olmaması için).
@@ -28,7 +32,8 @@ const newestFirst = (a: Profile, b: Profile) =>
 export const CATEGORIES: Category[] = [
   {
     slug: `${SITE_CITY_SLUG}-eskort`,
-    h1: `${SITE_CITY} Eskort İlanları`,
+    heading: `${SITE_CITY} Eskort`,
+    name: `${SITE_CITY} Eskort İlanları`,
     title: `${SITE_CITY} Eskort | En Yeni Eskort İlanları`,
     description: `${SITE_CITY} eskort ilanları en yeniden eskiye doğru sıralandı. Güncel eskort profillerini yayın tarihine göre inceleyin.`,
     intro: [
@@ -41,7 +46,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: `${SITE_CITY_SLUG}-travesti-escort`,
-    h1: `${SITE_CITY} Travesti Escort İlanları`,
+    heading: `${SITE_CITY} Travesti Escort`,
+    name: `${SITE_CITY} Travesti Escort İlanları`,
     title: `${SITE_CITY} Travesti Escort | Trans Escort İlanları`,
     description: `${SITE_CITY} travesti escort ilanları ve trans escort profilleri. Aktif ilanları fotoğraf ve iletişim bilgileriyle inceleyin.`,
     intro: [
@@ -53,7 +59,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: `${SITE_CITY_SLUG}-olgun-escort`,
-    h1: `${SITE_CITY} Olgun Escort İlanları`,
+    heading: `${SITE_CITY} Olgun Escort`,
+    name: `${SITE_CITY} Olgun Escort İlanları`,
     title: `${SITE_CITY} Olgun Escort | 30 Yaş Üstü Escort İlanları`,
     description: `${SITE_CITY} olgun escort ilanları. 30 yaş ve üzeri escort profillerini fotoğraf ve iletişim bilgileriyle görüntüleyin.`,
     intro: [
@@ -64,7 +71,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     slug: `${SITE_CITY_SLUG}-genc-escort`,
-    h1: `${SITE_CITY} Genç Escort İlanları`,
+    heading: `${SITE_CITY} Genç Escort`,
+    name: `${SITE_CITY} Genç Escort İlanları`,
     title: `${SITE_CITY} Genç Escort | Genç Escort İlanları ve Profilleri`,
     description: `${SITE_CITY} genç escort ilanları. 29 yaş altı escort profillerini fotoğraf ve iletişim bilgileriyle görüntüleyin.`,
     intro: [

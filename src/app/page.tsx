@@ -92,12 +92,16 @@ export default async function Home() {
       />
       <GtmViewItemList profiles={profiles} />
       <header className="border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
-        <h1
+        {/* Emojiler h1'in dışında: başlık etiketi yalnızca hedef anahtar
+            kelimeyi içersin, süsleme arama motoruna gürültü olarak gitmesin. */}
+        <div
           className="font-bold italic tracking-tight text-[var(--site-accent-strong)]"
           style={{ fontSize: "26px" }}
         >
-          🔥❤️‍🔥 {SITE_NAME} 🔥❤️‍🔥
-        </h1>
+          <span aria-hidden="true">🔥❤️‍🔥 </span>
+          <h1 className="inline">{SITE_NAME}</h1>
+          <span aria-hidden="true"> 🔥❤️‍🔥</span>
+        </div>
       </header>
 
       {/* WhatsApp Call to Action Banner */}
@@ -146,7 +150,7 @@ export default async function Home() {
                       href={categoryPath(category)}
                       className="font-medium text-[var(--site-accent-strong)] underline"
                     >
-                      {category.h1}
+                      {category.name}
                     </Link>
                     <span className="text-[var(--site-muted)]">
                       {" "}

@@ -84,12 +84,12 @@ export default async function CategoryPage({
   const listSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: category.h1,
+    name: category.name,
     description: category.description,
     url: pageUrl,
     mainEntity: {
       "@type": "ItemList",
-      name: category.h1,
+      name: category.name,
       numberOfItems: profiles.length,
       itemListElement: profiles.map((profile, index) => ({
         "@type": "ListItem",
@@ -112,7 +112,7 @@ export default async function CategoryPage({
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: SITE_NAME, item: siteUrl },
-      { "@type": "ListItem", position: 2, name: category.h1, item: pageUrl },
+      { "@type": "ListItem", position: 2, name: category.name, item: pageUrl },
     ],
   };
 
@@ -129,12 +129,16 @@ export default async function CategoryPage({
       <GtmViewItemList profiles={profiles} />
 
       <header className="border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
-        <h1
+        {/* Emojiler h1'in dışında: başlık etiketi yalnızca hedef anahtar
+            kelimeyi içersin, süsleme arama motoruna gürültü olarak gitmesin. */}
+        <div
           className="font-bold italic tracking-tight text-[var(--site-accent-strong)]"
           style={{ fontSize: "26px" }}
         >
-          🔥❤️‍🔥 {category.h1} 🔥❤️‍🔥
-        </h1>
+          <span aria-hidden="true">🔥❤️‍🔥 </span>
+          <h1 className="inline">{category.heading}</h1>
+          <span aria-hidden="true"> 🔥❤️‍🔥</span>
+        </div>
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-4 px-2 py-6">
@@ -150,7 +154,7 @@ export default async function CategoryPage({
               {SITE_NAME}
             </Link>
             <span className="mx-1">/</span>
-            <span className="text-[var(--site-text)]">{category.h1}</span>
+            <span className="text-[var(--site-text)]">{category.name}</span>
           </nav>
 
           <div className="mt-3 space-y-3 rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] p-4">
@@ -170,7 +174,7 @@ export default async function CategoryPage({
           <CategoryNav className="my-4" activeSlug={category.slug} />
 
           {profiles.length > 0 ? (
-            <ProfileGrid profiles={profiles} listName={category.h1} />
+            <ProfileGrid profiles={profiles} listName={category.name} />
           ) : (
             <p className="rounded-xl border border-[var(--site-border)] bg-[var(--site-card-bg)] p-6 text-center text-sm text-[var(--site-muted)]">
               Bu kategoride şu an yayında olan ilan yok.{" "}

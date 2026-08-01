@@ -28,7 +28,7 @@ export default function CategoryNav({
                 : "border-[var(--site-border)] bg-[var(--site-card-bg)] text-[var(--site-text)] hover:border-[var(--site-accent-strong)] hover:text-[var(--site-accent-strong)]"
             }`}
           >
-            {category.h1.replace(" İlanları", "")}
+            {category.heading}
           </Link>
         );
       })}
