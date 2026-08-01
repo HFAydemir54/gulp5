@@ -16,7 +16,6 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = SITE_URL;
-const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 const title = `${SITE_NAME} | Güncel Escort İlanları ve Profilleri`;
 const description = `${SITE_CITY} escort ilanları, güncel profiller ve detaylı bilgiler tek platformda. Kolay filtreleme ile aradığınız ilanlara hızlı erişim sağlayın.`;
 
@@ -88,14 +87,6 @@ export default function RootLayout({
           </>
         )}
         {children}
-        {adsenseClient && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
       </body>
     </html>
   );

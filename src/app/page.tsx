@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getProfiles, isProfileActive, type Profile } from "@/lib/profiles";
-import AdSlot from "@/components/AdSlot";
 import ProfileGrid from "@/components/ProfileGrid";
 import GtmViewItemList from "@/components/GtmViewItemList";
 import CategoryNav from "@/components/CategoryNav";
@@ -127,12 +126,6 @@ export default async function Home() {
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-4 px-2 py-6">
-        <AdSlot
-          slotId="1111111111"
-          label="Sol Reklam Alanı"
-          className="hidden w-40 shrink-0 lg:block lg:h-[600px] lg:sticky lg:top-6"
-        />
-
         <main className="min-w-0 flex-1">
           <CategoryNav className="mb-4" />
 
@@ -161,19 +154,7 @@ export default async function Home() {
               </ul>
             </section>
           )}
-
-          <AdSlot
-            slotId="3333333333"
-            label="Alt Reklam Alanı"
-            className="mt-8 h-24 w-full"
-          />
         </main>
-
-        <AdSlot
-          slotId="2222222222"
-          label="Sağ Reklam Alanı"
-          className="hidden w-40 shrink-0 lg:block lg:h-[600px] lg:sticky lg:top-6"
-        />
       </div>
     </div>
   );

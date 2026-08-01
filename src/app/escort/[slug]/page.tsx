@@ -8,7 +8,6 @@ import {
 } from "@/lib/profiles";
 import { idPrefixFromSlug, profilePath, profileSlug } from "@/lib/slug";
 import { toWhatsappUrl } from "@/lib/phone";
-import AdSlot from "@/components/AdSlot";
 import ImageSlider from "@/components/ImageSlider";
 import GtmViewItem from "@/components/GtmViewItem";
 import ContactButtons from "@/components/ContactButtons";
@@ -171,12 +170,6 @@ export default async function EscortDetailPage({
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-4 px-4 py-6">
-        <AdSlot
-          slotId="1111111111"
-          label="Sol Reklam Alanı"
-          className="hidden w-40 shrink-0 lg:block lg:h-[600px] lg:sticky lg:top-6"
-        />
-
         <main className="mx-auto min-w-0 w-full max-w-2xl flex-1">
           <nav aria-label="Site haritası" className="text-xs text-[var(--site-muted)]">
             <Link href="/" className="hover:text-[var(--site-accent-strong)]">
@@ -242,19 +235,7 @@ export default async function EscortDetailPage({
               </div>
             </div>
           </div>
-
-          <AdSlot
-            slotId="3333333333"
-            label="Alt Reklam Alanı"
-            className="mt-8 h-24 w-full"
-          />
         </main>
-
-        <AdSlot
-          slotId="2222222222"
-          label="Sağ Reklam Alanı"
-          className="hidden w-40 shrink-0 lg:block lg:h-[600px] lg:sticky lg:top-6"
-        />
       </div>
     </div>
   );
