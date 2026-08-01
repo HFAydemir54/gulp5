@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { notFound } from "next/navigation";
 import { v2 as cloudinary } from "cloudinary";
-import { isAdminAuthenticated } from "@/lib/auth";
+import { isAdminAuthenticated, isAdminEnabled } from "@/lib/auth";
 
 // Kimlik bilgileri yalnızca env'den okunur; daha önce API secret'ı kaynak
 // koda gömülüydü ve repoyu gören herkes hesabı kullanabiliyordu.
@@ -11,6 +12,8 @@ cloudinary.config({
 });
 
 export async function POST(request: NextRequest) {
+  if (!isAdminEnabled()) return notFound();
+
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

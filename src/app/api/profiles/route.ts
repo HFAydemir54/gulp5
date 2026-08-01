@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { notFound } from "next/navigation";
 import { addProfile, getProfiles } from "@/lib/profiles";
-import { isAdminAuthenticated } from "@/lib/auth";
+import { isAdminAuthenticated, isAdminEnabled } from "@/lib/auth";
 import { normalizePhoneDigits, isValidPhoneDigits } from "@/lib/phone";
 
 export async function GET() {
@@ -9,6 +10,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  if (!isAdminEnabled()) return notFound();
+
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

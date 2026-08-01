@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkPassword, makeSessionToken, ADMIN_COOKIE_NAME } from "@/lib/auth";
+import { notFound } from "next/navigation";
+import { checkPassword, makeSessionToken, ADMIN_COOKIE_NAME, isAdminEnabled } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
+  if (!isAdminEnabled()) return notFound();
+
   const body = await request.json();
   const password = String(body.password || "");
 

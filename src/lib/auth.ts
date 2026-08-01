@@ -11,6 +11,14 @@ function secret(): string | null {
   return value && value.length > 0 ? value : null;
 }
 
+// Admin paneli yalnızca ENABLE_ADMIN=1 verilen ortamlarda açılır. Üretimde bu
+// değişken tanımlanmadığı sürece panel ve tüm yönetim uçları yok sayılır;
+// ayrıca Vercel'in dosya sistemi salt okunur olduğu için panelin yazma
+// işlemleri üretimde zaten kalıcı olmuyordu.
+export function isAdminEnabled(): boolean {
+  return process.env.ENABLE_ADMIN === "1" && secret() !== null;
+}
+
 function sign(value: string, key: string): string {
   return createHmac("sha256", key).update(value).digest("hex");
 }
@@ -34,6 +42,7 @@ function isValidToken(token: string): boolean {
 }
 
 export async function isAdminAuthenticated(): Promise<boolean> {
+  if (!isAdminEnabled()) return false;
   const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value;
   if (!token) return false;
@@ -43,6 +52,7 @@ export async function isAdminAuthenticated(): Promise<boolean> {
 export const ADMIN_COOKIE_NAME = COOKIE_NAME;
 
 export function checkPassword(password: string): boolean {
+  if (!isAdminEnabled()) return false;
   const expected = secret();
   if (!expected) return false;
   const a = Buffer.from(password);
