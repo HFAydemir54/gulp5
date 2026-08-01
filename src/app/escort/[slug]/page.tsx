@@ -17,6 +17,7 @@ import GtmViewItem from "@/components/GtmViewItem";
 import ContactButtons from "@/components/ContactButtons";
 import BackToListLink from "@/components/BackToListLink";
 import ShareButton from "@/components/ShareButton";
+import RecentlyViewed from "@/components/RecentlyViewed";
 import { SITE_CITY, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -60,9 +61,8 @@ export async function generateMetadata({
     profile.meetingPlace,
   ].filter(Boolean) as string[];
   const title = [
-    SITE_NAME,
+    `${profile.city || SITE_CITY} Escort`,
     profile.firstName,
-    profile.city,
     profile.meetingPlace,
     profile.age,
   ]
@@ -183,7 +183,7 @@ export default async function EscortDetailPage({
       <GtmViewItem profile={profile} />
       <header className="border-b border-[var(--site-border)] bg-[var(--site-header-bg)] py-4 text-center">
         <h1 className="text-xl font-bold tracking-tight text-[var(--site-accent-strong)]">
-          Escort {profile.firstName} - {profile.city}
+          {profile.city || SITE_CITY} Escort {profile.firstName}
         </h1>
       </header>
 
@@ -311,6 +311,17 @@ export default async function EscortDetailPage({
               </div>
             </section>
           )}
+
+          <RecentlyViewed
+            profile={{
+              id: profile.id,
+              firstName: profile.firstName,
+              city: profile.city,
+              meetingPlace: profile.meetingPlace,
+              image: profile.images?.[0] ?? null,
+              expiresAt: profile.expiresAt,
+            }}
+          />
         </main>
       </div>
     </div>
