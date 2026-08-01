@@ -3,9 +3,13 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import {
   getProfileByIdPrefix,
+  getProfiles,
   isProfileActive,
   type Profile,
 } from "@/lib/profiles";
+import { categoriesOf, findRelated } from "@/lib/related";
+import { categoryPath } from "@/lib/categories";
+import ProfileGrid from "@/components/ProfileGrid";
 import { idPrefixFromSlug, profilePath, profileSlug } from "@/lib/slug";
 import { toWhatsappUrl } from "@/lib/phone";
 import ImageSlider from "@/components/ImageSlider";
@@ -116,6 +120,20 @@ export default async function EscortDetailPage({
     profile.phone,
     `Merhaba ${profile.firstName}, ${pageUrl} sayfası üzerinden ulaşım sağlıyorum.`,
   );
+
+  const active = (await getProfiles()).filter(isProfileActive);
+  const related = findRelated(profile, active);
+  const categories = categoriesOf(profile);
+
+  const publishedAt = new Date(profile.createdAt);
+  const publishedLabel = Number.isNaN(publishedAt.getTime())
+    ? null
+    : publishedAt.toLocaleDateString("tr-TR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+  const photoCount = profile.images?.length ?? 0;
 
   const personSchema = {
     "@context": "https://schema.org",
@@ -232,9 +250,67 @@ export default async function EscortDetailPage({
                   {profile.about ||
                     `${profile.firstName}, ${profile.city || "belirtilmemiş şehir"} bölgesinde ${profile.meetingPlace || "belirtilmemiş bir buluşma noktasında"} görüşmeler için listede yer alıyor.`}
                 </p>
+
+                {/* Özet, ilanın kendi alanlarından kuruluyor; her profilde
+                    farklı bir metin çıkıyor. Sabit bir kalıbı 49 sayfaya
+                    kopyalamak ince içeriği kopya içeriğe çevirirdi. */}
+                <p className="mt-3 text-sm leading-relaxed text-[var(--site-muted)]">
+                  {[
+                    `${profile.firstName}, ${SITE_CITY} escort ilanları arasında`,
+                    profile.age ? `${profile.age} yaşında` : null,
+                    profile.city ? `${profile.city} bölgesinde` : null,
+                    profile.meetingPlace
+                      ? `${profile.meetingPlace.toLocaleLowerCase("tr-TR")} seçenekleriyle`
+                      : null,
+                    "yer alıyor.",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}{" "}
+                  {photoCount > 0 &&
+                    `İlanda ${photoCount} fotoğraf bulunuyor. `}
+                  {publishedLabel && `İlan ${publishedLabel} tarihinde yayınlandı. `}
+                  İletişim bilgilerine yukarıdaki butonlardan ulaşabilirsiniz.
+                </p>
               </div>
+
+              {categories.length > 0 && (
+                <div className="mt-6 border-t border-[var(--site-border)] pt-6">
+                  <h2 className="text-sm font-semibold text-[var(--site-text)]">
+                    Bu ilanın yer aldığı kategoriler
+                  </h2>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                      <Link
+                        key={category.slug}
+                        href={categoryPath(category)}
+                        className="rounded-full border border-[var(--site-border)] bg-[var(--site-card-bg)] px-3 py-1.5 text-[13px] font-medium text-[var(--site-text)] transition-colors hover:border-[var(--site-accent-strong)] hover:text-[var(--site-accent-strong)]"
+                      >
+                        {category.heading}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* Benzer ilanlar: profil sayfalarından çıkan tek bağlantı anasayfaya
+              dönüş linkiydi, bu da tarama derinliğini kısıtlıyordu. Liste
+              kategori ve yaş yakınlığına göre deterministik seçiliyor. */}
+          {related.length > 0 && (
+            <section className="mt-8">
+              <h2 className="px-2 text-base font-semibold text-[var(--site-text)]">
+                {profile.city || SITE_CITY} bölgesinden benzer ilanlar
+              </h2>
+              <p className="mt-1 px-2 text-sm text-[var(--site-muted)]">
+                {profile.firstName} ile aynı kategorilerde yer alan diğer aktif
+                ilanlar.
+              </p>
+              <div className="mt-4">
+                <ProfileGrid profiles={related} listName="Benzer İlanlar" />
+              </div>
+            </section>
+          )}
         </main>
       </div>
     </div>
